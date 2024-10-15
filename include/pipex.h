@@ -12,4 +12,22 @@
 #include <sys/wait.h> // For waitpid()
 #include "../libft/include/libft.h"
 
+typedef struct s_pipex
+{
+    int     file1;
+    int     file2;
+    int     pipefd[2];
+    char    **cmd1;
+    char    **cmd2;
+    char    **envp;
+}               t_pipex;
+
+void    free_2d_array(char **array);
+int     error_handle(char *str, int *pipefd);
+int     open_files(char **argv, t_pipex *pipex);
+int     create_pipe(int *pipefd);
+char    *get_cmd_path(char *cmd);
+int     exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd);
+int     handle_fork(t_pipex *pipex, char **cmd, int index);
+
 #endif //PIPEX_PIPEX_H

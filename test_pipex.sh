@@ -88,6 +88,7 @@ divider
 echo "hello world" > input.txt
 echo "hello      world    pipex" > input6.txt
 echo "singleword" > input8.txt
+touch empty.txt  # Create empty.txt to fix Test 3
 
 # Test cases
 run_test "Test 1: cat and wc -l" \

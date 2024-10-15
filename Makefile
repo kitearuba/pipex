@@ -30,7 +30,9 @@ LIBFT_MAKEFILE = $(LIBFT_DIR)/Makefile
 
 # Source and Object Files
 # If pipex.c is in the root folder or src folder, adjust accordingly
-SRC = $(SRC_DIR)/pipex.c
+SRC = $(SRC_DIR)/pipex.c $(SRC_DIR)/error_handle.c $(SRC_DIR)/open_files.c \
+$(SRC_DIR)/create_pipe.c $(SRC_DIR)/get_cmd_path.c $(SRC_DIR)/exec_cmd.c \
+$(SRC_DIR)/handle_fork.c $(SRC_DIR)/free_2d_array.c
 OBJ = $(SRC:.c=.o)
 
 # All rule: Compile everything
