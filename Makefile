@@ -10,13 +10,12 @@
 #                                                                              #
 # **************************************************************************** #
 
+# Project name
+NAME = pipex
 
-NAME = libftpipex.a
-
+# Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-
-AR = ar rcs
 
 # Directories
 SRC_DIR = src
@@ -24,24 +23,39 @@ INC_DIR = include
 LIBFT_DIR = libft
 
 # Paths and Dependencies
-MAKEFILE = makefile
 HEADER = $(INC_DIR)/pipex.h
-LIBFT_A = libft.a
-LIBFT_H = $(LIBFT_DIR)/libft.h
-LIBFT_MAKEFILE = $(LIBFT_DIR)/$(MAKEFILE)
-INC = -I$(INC_DIR) -I$(LIBFT_DIR)
-DEP = $(HEADER) $(MAKEFILE)
+LIBFT_A = $(LIBFT_DIR)/libft.a
+LIBFT_H = $(INC_DIR)/libft.h
+LIBFT_MAKEFILE = $(LIBFT_DIR)/Makefile
 
-SRC =
-
+# Source and Object Files
+# If pipex.c is in the root folder or src folder, adjust accordingly
+SRC = $(SRC_DIR)/pipex.c
 OBJ = $(SRC:.c=.o)
 
-LIBFT_SRC =
-
-LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
-
+# All rule: Compile everything
 all: $(NAME)
 
-# Rule to create the archive libftpipex.a from object files.
-$(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_A)
-	cp
+# Build pipex executable and link with libft
+$(NAME): $(OBJ) $(LIBFT_A)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_A) -I$(INC_DIR) -o $(NAME)
+
+# Rule to build libft
+$(LIBFT_A):
+	make -C $(LIBFT_DIR)
+
+# Clean object files
+clean:
+	rm -f $(OBJ)
+	make -C $(LIBFT_DIR) clean
+
+# Clean object files and pipex executable
+fclean: clean
+	rm -f $(NAME)
+	make -C $(LIBFT_DIR) fclean
+
+# Rebuild everything
+re: fclean all
+
+# Phony targets
+.PHONY: all clean fclean re

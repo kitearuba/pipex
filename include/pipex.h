@@ -10,5 +10,6 @@
 #include <stdlib.h>  // For malloc(), free(), exit()
 #include <stdio.h>   // For perror()
 #include <sys/wait.h> // For waitpid()
+#include "../libft/include/libft.h"
 
 #endif //PIPEX_PIPEX_H
