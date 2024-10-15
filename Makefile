@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/10/06 15:41:57 by chrrodri          #+#    #+#              #
-#    Updated: 2024/10/06 15:42:11 by chrrodri         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 # Project name
 NAME = pipex
 
@@ -23,17 +11,52 @@ INC_DIR = include
 LIBFT_DIR = libft
 
 # Paths and Dependencies
+MAKEFILE = Makefile
 HEADER = $(INC_DIR)/pipex.h
 LIBFT_A = $(LIBFT_DIR)/libft.a
-LIBFT_H = $(INC_DIR)/libft.h
+LIBFT_H = $(LIBFT_DIR)/$(INC_DIR)/libft.h
 LIBFT_MAKEFILE = $(LIBFT_DIR)/Makefile
+DEPS = $(HEADER) $(MAKEFILE)
 
 # Source and Object Files
-# If pipex.c is in the root folder or src folder, adjust accordingly
-SRC = $(SRC_DIR)/pipex.c $(SRC_DIR)/error_handle.c $(SRC_DIR)/open_files.c \
-$(SRC_DIR)/create_pipe.c $(SRC_DIR)/get_cmd_path.c $(SRC_DIR)/exec_cmd.c \
-$(SRC_DIR)/handle_fork.c $(SRC_DIR)/free_2d_array.c
+SRC = 	$(SRC_DIR)/pipex.c $(SRC_DIR)/error_handle.c $(SRC_DIR)/open_files.c \
+		$(SRC_DIR)/create_pipe.c $(SRC_DIR)/get_cmd_path.c \
+		$(SRC_DIR)/exec_cmd.c $(SRC_DIR)/handle_fork.c \
+		$(SRC_DIR)/free_2d_array.c
+
 OBJ = $(SRC:.c=.o)
+
+LIBFT_SRCS = $(LIBFT_DIR)/$(SRC_DIR)/ft_isalpha.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isdigit.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_isalnum.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isascii.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_isprint.c $(LIBFT_DIR)/$(SRC_DIR)/ft_strlen.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_memset.c $(LIBFT_DIR)/$(SRC_DIR)/ft_bzero.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_memcpy.c $(LIBFT_DIR)/$(SRC_DIR)/ft_memmove.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_strlcpy.c $(LIBFT_DIR)/$(SRC_DIR)/ft_strlcat.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_toupper.c $(LIBFT_DIR)/$(SRC_DIR)/ft_tolower.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_strchr.c $(LIBFT_DIR)/$(SRC_DIR)/ft_strrchr.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_strncmp.c $(LIBFT_DIR)/$(SRC_DIR)/ft_memchr.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_memcmp.c $(LIBFT_DIR)/$(SRC_DIR)/ft_strnstr.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_atoi.c $(LIBFT_DIR)/$(SRC_DIR)/ft_calloc.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_strdup.c $(LIBFT_DIR)/$(SRC_DIR)/ft_substr.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_strjoin.c $(LIBFT_DIR)/$(SRC_DIR)/ft_strtrim.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_split.c $(LIBFT_DIR)/$(SRC_DIR)/ft_itoa.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_strmapi.c $(LIBFT_DIR)/$(SRC_DIR)/ft_striteri.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_putchar_fd.c $(LIBFT_DIR)/$(SRC_DIR)/ft_putstr_fd.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_putendl_fd.c $(LIBFT_DIR)/$(SRC_DIR)/ft_putnbr_fd.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_lstnew_bonus.c $(LIBFT_DIR)/$(SRC_DIR)/ft_lstadd_front_bonus.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_lstsize_bonus.c $(LIBFT_DIR)/$(SRC_DIR)/ft_lstlast_bonus.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_lstadd_back_bonus.c $(LIBFT_DIR)/$(SRC_DIR)/ft_lstdelone_bonus.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_lstclear_bonus.c $(LIBFT_DIR)/$(SRC_DIR)/ft_lstiter_bonus.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_lstmap_bonus.c $(LIBFT_DIR)/$(SRC_DIR)/ft_printf.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/print_format.c $(LIBFT_DIR)/$(SRC_DIR)/ft_putunbr.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/ft_puthex.c $(LIBFT_DIR)/$(SRC_DIR)/handle_char.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/handle_string.c $(LIBFT_DIR)/$(SRC_DIR)/handle_pointer.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/handle_int.c $(LIBFT_DIR)/$(SRC_DIR)/handle_uint.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/handle_hex.c $(LIBFT_DIR)/$(SRC_DIR)/handle_percent.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/utils.c $(LIBFT_DIR)/$(SRC_DIR)/get_next_line.c \
+             $(LIBFT_DIR)/$(SRC_DIR)/get_next_line_bonus.c $(LIBFT_DIR)/$(SRC_DIR)/ft_strappend.c
+
+LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
 
 # All rule: Compile everything
 all: $(NAME)
@@ -42,19 +65,23 @@ all: $(NAME)
 $(NAME): $(OBJ) $(LIBFT_A)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_A) -I$(INC_DIR) -o $(NAME)
 
-# Rule to build libft
-$(LIBFT_A):
-	make -C $(LIBFT_DIR)
+# Rule to rebuild libft.a if libft.h or any libft source files change
+$(LIBFT_A): $(LIBFT_MAKEFILE) $(LIBFT_SRCS) $(LIBFT_H)
+	$(MAKE) -C $(LIBFT_DIR)
+
+# Pattern rule for compiling object files from source files
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(DEPS)
+	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 # Clean object files
 clean:
 	rm -f $(OBJ)
-	make -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(LIBFT_DIR) clean
 
-# Clean object files and pipex executable
+# Full clean including libft.a and pipex executable
 fclean: clean
 	rm -f $(NAME)
-	make -C $(LIBFT_DIR) fclean
+	rm -f $(LIBFT_A)
 
 # Rebuild everything
 re: fclean all
