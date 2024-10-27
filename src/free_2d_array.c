@@ -3,17 +3,20 @@
 //
 #include "../include/pipex.h"
 
-void free_2d_array(char **array)
+void free_2d_array(char **arr)
 {
     int i = 0;
 
-    if (!array)
-        return;
+    if (!arr)
+        return;  // Ensure the array exists
 
-    while (array[i])
+    while (arr[i])
     {
-        free(array[i]);
+        free(arr[i]);  // Free each element
+        arr[i] = NULL;  // Set the pointer to NULL to avoid double free
         i++;
     }
-    free(array);  // Free the array itself
+
+    free(arr);  // Finally, free the array itself
+    arr = NULL;  // Set the pointer to NULL to avoid double free
 }
