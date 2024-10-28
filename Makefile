@@ -7,6 +7,7 @@ CFLAGS = -Wall -Werror -Wextra
 
 # Directories
 SRC_DIR = src
+BONUS_SRC_DIR = src_bonus
 INC_DIR = include
 LIBFT_DIR = libft
 
@@ -24,7 +25,15 @@ SRC = 	$(SRC_DIR)/pipex.c $(SRC_DIR)/error_handle.c $(SRC_DIR)/open_files.c \
 		$(SRC_DIR)/exec_cmd.c $(SRC_DIR)/handle_fork.c \
 		$(SRC_DIR)/free_2d_array.c
 
+# Source and Object Files for Bonus Part
+SRC_BONUS = 	$(BONUS_SRC_DIR)/pipex_bonus.c $(BONUS_SRC_DIR)/error_handle_bonus.c \
+		$(BONUS_SRC_DIR)/open_files_bonus.c $(BONUS_SRC_DIR)/create_pipe_bonus.c \
+		$(BONUS_SRC_DIR)/get_cmd_path_bonus.c $(BONUS_SRC_DIR)/exec_cmd_bonus.c \
+		$(BONUS_SRC_DIR)/handle_fork_bonus.c $(BONUS_SRC_DIR)/free_2d_array_bonus.c
+
+# Object Files
 OBJ = $(SRC:.c=.o)
+OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 LIBFT_SRCS = $(LIBFT_DIR)/$(SRC_DIR)/ft_isalpha.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isdigit.c \
              $(LIBFT_DIR)/$(SRC_DIR)/ft_isalnum.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isascii.c \
@@ -73,18 +82,26 @@ $(LIBFT_A): $(LIBFT_MAKEFILE) $(LIBFT_SRCS) $(LIBFT_H)
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(DEPS)
 	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-# Clean object files
+# Pattern rule for compiling bonus object files from source files
+$(BONUS_SRC_DIR)/%.o: $(BONUS_SRC_DIR)/%.c $(DEPS)
+	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+
+# Bonus Rule
+bonus: $(OBJ_BONUS) $(LIBFT_A)
+	$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBFT_A) -I$(INC_DIR) -o $(NAME)_bonus
+
+# Clean object files (including bonus objects)
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(OBJ_BONUS)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 # Full clean including libft.a and pipex executable
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME)_bonus
 	rm -f $(LIBFT_A)
 
 # Rebuild everything
 re: fclean all
 
 # Phony targets
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
