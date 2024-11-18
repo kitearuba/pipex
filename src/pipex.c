@@ -43,12 +43,13 @@ int main(int argc, char **argv, char **envp)
         return (1);
     }
 
+    // Execute commands
     if (handle_fork(&pipex, pipex.cmd1, 1) || handle_fork(&pipex, pipex.cmd2, 2))
     {
         free_pipex(&pipex);
         return (1);
     }
 
-    free_pipex(&pipex);
+    free_pipex(&pipex); // Free allocated resources
     return (0);
 }
