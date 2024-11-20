@@ -1,13 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_handle.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/20 21:37:27 by chrrodri          #+#    #+#             */
+/*   Updated: 2024/11/20 21:40:38 by chrrodri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/pipex.h"
 
-int error_handle(char *str, int *pipefd)
+int	error_handle(char *str, int *pipefd)
 {
-    if (pipefd)
-    {
-        close(pipefd[0]);
-        close(pipefd[1]);
-    }
-    // Use ft_printf to print the error message and strerror message
-    ft_printf("%s: %s\n", str, strerror(errno));
-    return (1);  // Return error value
+	if (pipefd)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
+	}
+	ft_printf("%s: %s\n", str, strerror(errno));
+	return (1);
 }

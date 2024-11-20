@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_fork.c                                      :+:      :+:    :+:   */
+/*   init_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 22:20:00 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/11/20 22:24:08 by chrrodri         ###   ########.fr       */
+/*   Created: 2024/11/20 21:32:16 by chrrodri          #+#    #+#             */
+/*   Updated: 2024/11/20 21:32:43 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-int	handle_fork(t_pipex *pipex, char **cmd, int index)
+int	init_pipex(t_pipex *pipex, char **argv, char **envp)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-		return (error_handle("Error forking", pipex->pipefd));
-	if (pid == 0)
-	{
-		if (index == 1)
-		{
-			close(pipex->pipefd[0]);
-			return (exec_cmd(pipex, pipex->file1, pipex->pipefd[1], cmd));
-		}
-		if (index == 2)
-		{
-			close(pipex->pipefd[1]);
-			return (exec_cmd(pipex, pipex->pipefd[0], pipex->file2, cmd));
-		}
-	}
+	pipex->envp = envp;
+	pipex->cmd1 = ft_split(argv[2], ' ');
+	pipex->cmd2 = ft_split(argv[3], ' ');
+	if (!pipex->cmd1 || !pipex->cmd2)
+		return (1);
 	return (0);
 }

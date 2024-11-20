@@ -1,22 +1,30 @@
-//
-// Created by christian on 16/10/24.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_2d_array.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/20 21:54:18 by chrrodri          #+#    #+#             */
+/*   Updated: 2024/11/20 22:02:25 by chrrodri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/pipex.h"
 
-void free_2d_array(char **arr)
+void	free_2d_array(char **arr)
 {
-    int i = 0;
+	int	i;
 
-    if (!arr)
-        return;  // Ensure the array exists
-
-    while (arr[i])
-    {
-        free(arr[i]);  // Free each element
-        arr[i] = NULL;  // Set the pointer to NULL to avoid double free
-        i++;
-    }
-
-    free(arr);  // Finally, free the array itself
-    arr = NULL;  // Set the pointer to NULL to avoid double free
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
+	free(arr);
+	arr = NULL;
 }
