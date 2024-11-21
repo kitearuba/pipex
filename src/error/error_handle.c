@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_pipex.c                                       :+:      :+:    :+:   */
+/*   error_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 21:32:16 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/11/20 21:32:43 by chrrodri         ###   ########.fr       */
+/*   Created: 2024/11/20 21:37:27 by chrrodri          #+#    #+#             */
+/*   Updated: 2024/11/20 21:40:38 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../../include/pipex.h"
 
-int	init_pipex(t_pipex *pipex, char **argv, char **envp)
+int	error_handle(char *str, int *pipefd)
 {
-	pipex->envp = envp;
-	pipex->cmd1 = ft_split(argv[2], ' ');
-	pipex->cmd2 = ft_split(argv[3], ' ');
-	if (!pipex->cmd1 || !pipex->cmd2)
-		return (1);
-	return (0);
+	if (pipefd)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
+	}
+	fatal_error( str, NULL, 1);
+	return (1);
 }

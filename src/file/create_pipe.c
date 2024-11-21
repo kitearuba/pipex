@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handle.c                                     :+:      :+:    :+:   */
+/*   create_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 21:37:27 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/11/20 21:40:38 by chrrodri         ###   ########.fr       */
+/*   Created: 2024/11/20 21:34:32 by chrrodri          #+#    #+#             */
+/*   Updated: 2024/11/20 21:36:05 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../../include/pipex.h"
 
-int	error_handle(char *str, int *pipefd)
+int	create_pipe(int *pipefd)
 {
-	if (pipefd)
-	{
-		close(pipefd[0]);
-		close(pipefd[1]);
-	}
-	fatal_error( (const char *)str, NULL, 1);
-	return (1);
+	if (pipe(pipefd) == -1)
+		return (error_handle("Error creating pipe", pipefd));
+	return (0);
 }

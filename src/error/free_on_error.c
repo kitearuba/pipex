@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../../include/pipex.h"
 
 void	free_resources_on_error(t_pipex *pipex, const char *error_message)
 {

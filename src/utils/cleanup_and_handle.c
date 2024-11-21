@@ -10,30 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../../include/pipex.h"
 
-int	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
+int cleanup_and_handle(char *cmd_path, char **cmd, char *error_msg, t_pipex *pipex)
 {
-	char	*cmd_path;
-
-	cmd_path = get_cmd_path(cmd[0]);
-	if (cmd_path == NULL)
-	{
-		fatal_error("Command not found", cmd[0], 0);
-		free_2d_array(cmd);
-		return (1);
-	}
-	if (dup2(input_fd, STDIN_FILENO) < 0 || dup2(output_fd, STDOUT_FILENO) < 0)
-	{
-		free(cmd_path);
-		free_2d_array(cmd);
-		return (error_handle("Error with dup2", pipex->pipefd));
-	}
-	close(pipex->pipefd[0]);
-	close(pipex->pipefd[1]);
-	execve(cmd_path, cmd, pipex->envp);
-	fatal_error("Error executing command", cmd[0], 1); // Handles execve errors
-	free(cmd_path);
-	free_2d_array(cmd);
-	return (1);
+    if (cmd_path)
+        free(cmd_path);
+    if (cmd)
+        free_2d_array(cmd);
+    if (pipex)
+        error_handle(error_msg, pipex->pipefd);
+    else
+        fatal_error(error_msg, NULL, 1);
+    return (1);
 }

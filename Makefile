@@ -6,10 +6,10 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
 # Directories
-SRC_DIR = src
-BONUS_SRC_DIR = src_bonus
-INC_DIR = include
-LIBFT_DIR = libft
+SRC_DIR := src
+BONUS_SRC_DIR := src_bonus
+INC_DIR := include
+LIBFT_DIR := libft
 
 # Paths and Dependencies
 MAKEFILE = Makefile
@@ -17,27 +17,30 @@ HEADER = $(INC_DIR)/pipex.h
 LIBFT_A = $(LIBFT_DIR)/libft.a
 LIBFT_H = $(LIBFT_DIR)/$(INC_DIR)/libft.h
 LIBFT_MAKEFILE = $(LIBFT_DIR)/Makefile
-DEPS = $(HEADER) $(MAKEFILE)
+DEPS := $(HEADER) $(MAKEFILE)
 
 # Source and Object Files
-SRC = 	$(SRC_DIR)/pipex.c $(SRC_DIR)/error_handle.c $(SRC_DIR)/open_files.c \
-		$(SRC_DIR)/create_pipe.c $(SRC_DIR)/get_cmd_path.c \
-		$(SRC_DIR)/exec_cmd.c $(SRC_DIR)/handle_fork.c \
-		$(SRC_DIR)/free_2d_array.c $(SRC_DIR)/free_on_error.c \
-		$(SRC_DIR)/free_pipex.c $(SRC_DIR)/init_pipex.c \
-		$(SRC_DIR)/fatal_error.c $(SRC_DIR)/get_path_dirs.c
+SRC := $(SRC_DIR)/core/pipex.c \
+       $(SRC_DIR)/error/error_handle.c $(SRC_DIR)/error/fatal_error.c \
+       $(SRC_DIR)/error/free_on_error.c \
+       $(SRC_DIR)/file/open_files.c $(SRC_DIR)/file/create_pipe.c \
+       $(SRC_DIR)/cmd/get_cmd_path.c $(SRC_DIR)/cmd/get_path_dirs.c \
+       $(SRC_DIR)/cmd/exec_cmd.c $(SRC_DIR)/cmd/handle_fork.c \
+       $(SRC_DIR)/utils/free_2d_array.c $(SRC_DIR)/utils/free_pipex.c \
+       $(SRC_DIR)/utils/init_pipex.c $(SRC_DIR)/utils/cleanup_and_handle.c
+
 
 # Source and Object Files for Bonus Part
-SRC_BONUS = 	$(BONUS_SRC_DIR)/pipex_bonus.c $(BONUS_SRC_DIR)/error_handle_bonus.c \
+SRC_BONUS := 	$(BONUS_SRC_DIR)/pipex_bonus.c $(BONUS_SRC_DIR)/error_handle_bonus.c \
 		$(BONUS_SRC_DIR)/open_files_bonus.c $(BONUS_SRC_DIR)/create_pipe_bonus.c \
 		$(BONUS_SRC_DIR)/get_cmd_path_bonus.c $(BONUS_SRC_DIR)/exec_cmd_bonus.c \
 		$(BONUS_SRC_DIR)/handle_fork_bonus.c $(BONUS_SRC_DIR)/free_2d_array_bonus.c
 
 # Object Files
-OBJ = $(SRC:.c=.o)
-OBJ_BONUS = $(SRC_BONUS:.c=.o)
+OBJ := $(SRC:.c=.o)
+OBJ_BONUS := $(SRC_BONUS:.c=.o)
 
-LIBFT_SRCS = $(LIBFT_DIR)/$(SRC_DIR)/ft_isalpha.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isdigit.c \
+LIBFT_SRCS := $(LIBFT_DIR)/$(SRC_DIR)/ft_isalpha.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isdigit.c \
              $(LIBFT_DIR)/$(SRC_DIR)/ft_isalnum.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isascii.c \
              $(LIBFT_DIR)/$(SRC_DIR)/ft_isprint.c $(LIBFT_DIR)/$(SRC_DIR)/ft_strlen.c \
              $(LIBFT_DIR)/$(SRC_DIR)/ft_memset.c $(LIBFT_DIR)/$(SRC_DIR)/ft_bzero.c \
@@ -67,7 +70,7 @@ LIBFT_SRCS = $(LIBFT_DIR)/$(SRC_DIR)/ft_isalpha.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isd
              $(LIBFT_DIR)/$(SRC_DIR)/utils.c $(LIBFT_DIR)/$(SRC_DIR)/get_next_line.c \
              $(LIBFT_DIR)/$(SRC_DIR)/get_next_line_bonus.c $(LIBFT_DIR)/$(SRC_DIR)/ft_strappend.c
 
-LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
+LIBFT_OBJS := $(LIBFT_SRCS:.c=.o)
 
 # All rule: Compile everything
 all: $(NAME)
