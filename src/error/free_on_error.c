@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:31:36 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/11/20 22:32:39 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/11/21 21:16:52 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	free_resources_on_error(t_pipex *pipex, const char *error_message)
 		free_2d_array(pipex->cmd2);
 		pipex->cmd2 = NULL;
 	}
-	fatal_error(error_message, NULL, 1); // Consistent error handling
+	fatal_error(error_message, NULL, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:37:27 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/11/20 21:40:38 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/11/21 21:15:01 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ int	error_handle(char *str, int *pipefd)
 		close(pipefd[0]);
 		close(pipefd[1]);
 	}
-	fatal_error( str, NULL, 1);
+	fatal_error(str, NULL, 1);
 	return (1);
 }
