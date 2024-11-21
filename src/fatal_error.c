@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handle.c                                     :+:      :+:    :+:   */
+/*   fatal_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,13 +12,14 @@
 
 #include "../include/pipex.h"
 
-int	error_handle(char *str, int *pipefd)
+void    fatal_error(const char *msg, const char *detail, int use_errno)
 {
-	if (pipefd)
-	{
-		close(pipefd[0]);
-		close(pipefd[1]);
-	}
-	fatal_error( (const char *)str, NULL, 1);
-	return (1);
+    if (msg)
+        ft_printf("Error: %s", msg);
+    if (detail)
+        ft_printf(" '%s'", detail);
+    if (use_errno)
+        ft_printf(": %s", strerror(errno));
+    ft_printf("\n");
+    exit(EXIT_FAILURE);
 }

@@ -23,7 +23,9 @@ DEPS = $(HEADER) $(MAKEFILE)
 SRC = 	$(SRC_DIR)/pipex.c $(SRC_DIR)/error_handle.c $(SRC_DIR)/open_files.c \
 		$(SRC_DIR)/create_pipe.c $(SRC_DIR)/get_cmd_path.c \
 		$(SRC_DIR)/exec_cmd.c $(SRC_DIR)/handle_fork.c \
-		$(SRC_DIR)/free_2d_array.c
+		$(SRC_DIR)/free_2d_array.c $(SRC_DIR)/free_on_error.c \
+		$(SRC_DIR)/free_pipex.c $(SRC_DIR)/init_pipex.c \
+		$(SRC_DIR)/fatal_error.c $(SRC_DIR)/get_path_dirs.c
 
 # Source and Object Files for Bonus Part
 SRC_BONUS = 	$(BONUS_SRC_DIR)/pipex_bonus.c $(BONUS_SRC_DIR)/error_handle_bonus.c \

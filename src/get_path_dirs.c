@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_cmd_path.c                                     :+:      :+:    :+:   */
+/*   get_path_dirs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,29 +12,22 @@
 
 #include "../include/pipex.h"
 
-char *get_cmd_path(char *cmd)
+char    **get_path_dirs(char **cmd_path)
 {
-	char *cmd_path;
-	char **dirs;
-	int i;
+    char *path;
+    char **dirs;
 
-	dirs = get_path_dirs(&cmd_path);
-	if (!dirs)
-		return (NULL);
-	i = 0;
-	while (dirs[i])
-	{
-		ft_strlcpy(cmd_path, dirs[i], 4096);
-		ft_strlcat(cmd_path, "/", 4096);
-		ft_strlcat(cmd_path, cmd, 4096);
-		if (access(cmd_path, X_OK) == 0)
-		{
-			free_2d_array(dirs);
-			return (cmd_path);
-		}
-		i++;
-	}
-	free(cmd_path);
-	free_2d_array(dirs);
-	return (NULL);
+    path = getenv("PATH");
+    if (!path)
+        fatal_error("PATH not found in environment", NULL, 0);
+    *cmd_path = malloc(4096);
+    if (!*cmd_path)
+        fatal_error("Memory allocation failed for command path", NULL, 1);
+    dirs = ft_split(path, ':');
+    if (!dirs)
+    {
+        free(*cmd_path);
+        fatal_error("Failed to split PATH into directories", NULL, 1);
+    }
+    return (dirs);
 }

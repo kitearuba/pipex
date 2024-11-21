@@ -19,9 +19,7 @@ int	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 	cmd_path = get_cmd_path(cmd[0]);
 	if (cmd_path == NULL)
 	{
-		ft_putstr_fd("Error: Command '", STDERR_FILENO);
-		ft_putstr_fd(cmd[0], STDERR_FILENO);
-		ft_putstr_fd("' not found\n", STDERR_FILENO);
+		fatal_error("Command not found", cmd[0], 0);
 		free_2d_array(cmd);
 		return (1);
 	}
@@ -34,8 +32,8 @@ int	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 	close(pipex->pipefd[0]);
 	close(pipex->pipefd[1]);
 	execve(cmd_path, cmd, pipex->envp);
-	perror("Error executing command");
+	fatal_error("Error executing command", cmd[0], 1); // Handles execve errors
 	free(cmd_path);
 	free_2d_array(cmd);
-	exit(1);
+	return (1);
 }

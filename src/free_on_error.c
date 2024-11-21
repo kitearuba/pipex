@@ -14,7 +14,6 @@
 
 void	free_resources_on_error(t_pipex *pipex, const char *error_message)
 {
-	perror(error_message);
 	if (pipex->file1 >= 0)
 		close(pipex->file1);
 	if (pipex->file2 >= 0)
@@ -29,4 +28,5 @@ void	free_resources_on_error(t_pipex *pipex, const char *error_message)
 		free_2d_array(pipex->cmd2);
 		pipex->cmd2 = NULL;
 	}
+	fatal_error(error_message, NULL, 1); // Consistent error handling
 }
