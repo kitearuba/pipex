@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:50:31 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/11/21 19:30:04 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/11/22 11:20:42 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ int	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 	cmd_path = get_cmd_path(cmd[0]);
 	if (!cmd_path)
 	{
-		// Close pipe ends and free memory, then exit silently
 		close(pipex->pipefd[0]);
 		close(pipex->pipefd[1]);
 		free_2d_array(cmd);
-		exit(127); // Standard exit code for "command not found"
+		exit(127);
 	}
 	if (dup2(input_fd, STDIN_FILENO) < 0 || dup2(output_fd, STDOUT_FILENO) < 0)
 		return (cleanup_and_handle(cmd_path, cmd, "Error with dup2", pipex));
@@ -31,5 +30,5 @@ int	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 	close(pipex->pipefd[1]);
 	execve(cmd_path, cmd, pipex->envp);
 	cleanup_and_handle(cmd_path, cmd, "Error executing command", NULL);
-	exit(1); // Exit if execve fails
+	exit(1);
 }

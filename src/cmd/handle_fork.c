@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:20:00 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/11/21 23:13:35 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/11/22 11:20:17 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	handle_fork(t_pipex *pipex, char **cmd, int index)
 		if (index == 2)
 		{
 			close(pipex->pipefd[1]);
-			// If first command fails, allow second to execute with /dev/null
 			if (dup2(pipex->pipefd[0], STDIN_FILENO) < 0)
 				fatal_error("Error redirecting pipe to stdin", NULL, 1);
 			close(pipex->pipefd[0]);
