@@ -29,7 +29,11 @@ int	handle_fork(t_pipex *pipex, char **cmd, int index)
 		if (index == 2)
 		{
 			close(pipex->pipefd[1]);
-			return (exec_cmd(pipex, pipex->pipefd[0], pipex->file2, cmd));
+			// If first command fails, allow second to execute with /dev/null
+			if (dup2(pipex->pipefd[0], STDIN_FILENO) < 0)
+				fatal_error("Error redirecting pipe to stdin", NULL, 1);
+			close(pipex->pipefd[0]);
+			return (exec_cmd(pipex, STDIN_FILENO, pipex->file2, cmd));
 		}
 	}
 	return (0);

@@ -19,9 +19,11 @@ int	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 	cmd_path = get_cmd_path(cmd[0]);
 	if (!cmd_path)
 	{
-		fatal_error("Command not found", cmd[0], 0);
+		// Close pipe ends and free memory, then exit silently
+		close(pipex->pipefd[0]);
+		close(pipex->pipefd[1]);
 		free_2d_array(cmd);
-		return (1);
+		exit(127); // Standard exit code for "command not found"
 	}
 	if (dup2(input_fd, STDIN_FILENO) < 0 || dup2(output_fd, STDOUT_FILENO) < 0)
 		return (cleanup_and_handle(cmd_path, cmd, "Error with dup2", pipex));
@@ -29,5 +31,5 @@ int	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 	close(pipex->pipefd[1]);
 	execve(cmd_path, cmd, pipex->envp);
 	cleanup_and_handle(cmd_path, cmd, "Error executing command", NULL);
-	exit (1);
+	exit(1); // Exit if execve fails
 }
