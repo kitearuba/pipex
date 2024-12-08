@@ -6,12 +6,16 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:32:16 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/11/20 21:32:43 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/08 18:52:38 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
+/**
+ * Initializes the pipex structure with environment variables and commands.
+ * Parses command-line arguments into executable commands and handles errors.
+ */
 int	init_pipex(t_pipex *pipex, char **argv, char **envp)
 {
 	pipex->envp = envp;

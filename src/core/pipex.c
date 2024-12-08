@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
+/*   By: chrrodri <chrrodri@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:18:38 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/11/20 21:33:08 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:32:53 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/pipex.h"
+#include "pipex.h"
 
+/**
+* Main function of the Pipex program.
+* Takes 5 arguments: file1, cmd1, cmd2, and file2.
+* Initializes the t_pipex structure, opens files, creates pipes,
+* and handles process forks to execute commands.
+*/
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
@@ -21,16 +27,15 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("Usage: ./pipex file1 cmd1 cmd2 file2\n");
 		return (1);
 	}
-	//  Initializes the t_pipex structure with arguments and the environment.
-	if (init_pipex(&pipex, argv, envp) || open_files(argv, &pipex) \
-			|| create_pipe(pipex.pipefd))
+	if (init_pipex(&pipex, argv, envp)
+		|| open_files(argv, &pipex)
+		|| create_pipe(pipex.pipefd))
 	{
 		free_pipex(&pipex);
 		return (1);
 	}
-	// Two calls to handle_fork for executing cmd1 and cmd2 in separate processes.
-	if (handle_fork(&pipex, pipex.cmd1, 1) \
-			|| handle_fork(&pipex, pipex.cmd2, 2))
+	if (handle_fork(&pipex, pipex.cmd1, 1)
+		|| handle_fork(&pipex, pipex.cmd2, 2))
 	{
 		free_pipex(&pipex);
 		return (1);
