@@ -21,12 +21,14 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("Usage: ./pipex file1 cmd1 cmd2 file2\n");
 		return (1);
 	}
+	//  Initializes the t_pipex structure with arguments and the environment.
 	if (init_pipex(&pipex, argv, envp) || open_files(argv, &pipex) \
 			|| create_pipe(pipex.pipefd))
 	{
 		free_pipex(&pipex);
 		return (1);
 	}
+	// Two calls to handle_fork for executing cmd1 and cmd2 in separate processes.
 	if (handle_fork(&pipex, pipex.cmd1, 1) \
 			|| handle_fork(&pipex, pipex.cmd2, 2))
 	{

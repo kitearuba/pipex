@@ -41,16 +41,8 @@ SRC := $(SRC_DIR)/core/pipex.c \
        $(SRC_DIR)/utils/free_2d_array.c $(SRC_DIR)/utils/free_pipex.c \
        $(SRC_DIR)/utils/init_pipex.c $(SRC_DIR)/utils/cleanup_and_handle.c
 
-
-# Source and Object Files for Bonus Part
-SRC_BONUS := 	$(BONUS_SRC_DIR)/pipex_bonus.c $(BONUS_SRC_DIR)/error_handle_bonus.c \
-		$(BONUS_SRC_DIR)/open_files_bonus.c $(BONUS_SRC_DIR)/create_pipe_bonus.c \
-		$(BONUS_SRC_DIR)/get_cmd_path_bonus.c $(BONUS_SRC_DIR)/exec_cmd_bonus.c \
-		$(BONUS_SRC_DIR)/handle_fork_bonus.c $(BONUS_SRC_DIR)/free_2d_array_bonus.c
-
 # Object Files
 OBJ := $(SRC:.c=.o)
-OBJ_BONUS := $(SRC_BONUS:.c=.o)
 
 LIBFT_SRCS := $(LIBFT_DIR)/$(SRC_DIR)/ft_isalpha.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isdigit.c \
              $(LIBFT_DIR)/$(SRC_DIR)/ft_isalnum.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isascii.c \

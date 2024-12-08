@@ -20,7 +20,7 @@ int	init_pipex(t_pipex *pipex, char **argv, char **envp)
 	if (!pipex->cmd1 || !pipex->cmd2)
 	{
 		free_pipex(pipex);
-		fatal_error("Error initializing pipex", NULL, 0);
+		fatal_error("Error parsing command arguments", NULL, 0);
 		return (1);
 	}
 	return (0);
