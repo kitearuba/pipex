@@ -28,11 +28,11 @@
 void	fatal_error(const char *msg, const char *detail, int use_errno)
 {
 	if (msg)
-		ft_printf("Error: %s", msg);
+		ft_printf_fd(STDERR_FILENO, "pipex: %s", msg);
 	if (detail)
-		ft_printf(" '%s'", detail);
+		ft_printf_fd(STDERR_FILENO, " '%s'", detail);
 	if (use_errno)
-		ft_printf(": %s", strerror(errno));
-	ft_printf("\n");
+		ft_printf_fd(STDERR_FILENO, ": %s", strerror(errno));
+	ft_printf_fd(STDERR_FILENO, "\n");
 	exit (1);
 }

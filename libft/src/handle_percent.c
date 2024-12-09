@@ -12,8 +12,8 @@
 
 #include "../include/libft.h"
 
-int	handle_percent(void)
+int	handle_percent(int fd)
 {
-	ft_putchar_fd('%', FT_STDOUT);
+	ft_putchar_fd('%', fd);
 	return (1);
 }

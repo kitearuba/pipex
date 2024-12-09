@@ -12,7 +12,7 @@
 
 #include "../include/libft.h"
 
-int	handle_string(va_list args)
+int	handle_string(va_list args, int fd)
 {
 	char	*str;
 	int		len;
@@ -20,10 +20,10 @@ int	handle_string(va_list args)
 	str = va_arg(args, char *);
 	if (str == NULL)
 	{
-		ft_putstr_fd("(null)", FT_STDOUT);
+		ft_putstr_fd("(null)", fd);
 		return (6);
 	}
-	ft_putstr_fd(str, FT_STDOUT);
+	ft_putstr_fd(str, fd);
 	len = ft_strlen(str);
 	return (len);
 }

@@ -51,6 +51,14 @@ static char	*try_path(char **dirs, char *cmd, char **cmd_path)
 
 char	*get_cmd_path(char *cmd)
 {
+	// Handle absolute paths and paths starting with "./"
+	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
+	{
+		if (access(cmd, X_OK) == 0)
+			return (ft_strdup(cmd)); // Command is valid and executable
+		ft_printf_fd(STDERR_FILENO, "pipex: %s: %s\n", cmd, strerror(errno));
+		return (NULL);
+	}
 	char	*cmd_path;
 	char	**dirs;
 	char	*result;
@@ -63,6 +71,7 @@ char	*get_cmd_path(char *cmd)
 	{
 		free(cmd_path);
 		free_2d_array(dirs);
+		ft_printf_fd(STDERR_FILENO, "pipex: %s: command not found\n", cmd);
 	}
 	return (result);
 }

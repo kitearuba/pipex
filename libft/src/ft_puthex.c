@@ -12,7 +12,7 @@
 
 #include "../include/libft.h"
 
-void	ft_puthex(unsigned long n, int uppercase)
+void	ft_puthex(unsigned long n, int uppercase, int fd)
 {
 	char	*base;
 
@@ -21,6 +21,6 @@ void	ft_puthex(unsigned long n, int uppercase)
 	else
 		base = "0123456789abcdef";
 	if (n >= 16)
-		ft_puthex(n / 16, uppercase);
-	ft_putchar_fd(base[n % 16], FT_STDOUT);
+		ft_puthex(n / 16, uppercase, fd);
+	ft_putchar_fd(base[n % 16], fd);
 }

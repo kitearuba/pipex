@@ -12,11 +12,11 @@
 
 #include "../include/libft.h"
 
-int	handle_uint(va_list args)
+int	handle_uint(va_list args, int fd)
 {
 	unsigned int	num;
 
 	num = va_arg(args, unsigned int);
-	ft_putunbr(num);
+	ft_putunbr(num, fd);
 	return (get_uint_length(num));
 }

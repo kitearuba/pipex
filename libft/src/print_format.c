@@ -12,21 +12,21 @@
 
 #include "../include/libft.h"
 
-int	print_format(const char *ptr, va_list args)
+int	print_format(const char *ptr, va_list args, int fd)
 {
 	if (*ptr == 'c')
-		return (handle_char(args));
+		return (handle_char(args, fd));
 	else if (*ptr == 's')
-		return (handle_string(args));
+		return (handle_string(args, fd));
 	else if (*ptr == 'p')
-		return (handle_pointer(args));
+		return (handle_pointer(args, fd));
 	else if (*ptr == 'd' || *ptr == 'i')
-		return (handle_int(args));
+		return (handle_int(args, fd));
 	else if (*ptr == 'u')
-		return (handle_uint(args));
+		return (handle_uint(args, fd));
 	else if (*ptr == 'x' || *ptr == 'X')
-		return (handle_hex(args, *ptr == 'X'));
+		return (handle_hex(args, fd, *ptr == 'X'));
 	else if (*ptr == '%')
-		return (handle_percent());
+		return (handle_percent(fd));
 	return (0);
 }

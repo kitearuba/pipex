@@ -79,19 +79,20 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-// Printf functions.
+// Printf and Printf_fd functions.
 int		ft_printf(const char *format, ...);
-void	ft_putunbr(unsigned int n);
-void	ft_puthex(unsigned long n, int uppercase);
-int		handle_format(const char *format, va_list args);
-int		print_format(const char *ptr, va_list args);
-int		handle_char(va_list args);
-int		handle_string(va_list args);
-int		handle_pointer(va_list args);
-int		handle_int(va_list args);
-int		handle_uint(va_list args);
-int		handle_hex(va_list args, int uppercase);
-int		handle_percent(void);
+int		ft_printf_fd(int fd, const char *format, ...);
+void	ft_putunbr(unsigned int n, int fd);
+void	ft_puthex(unsigned long n, int uppercase, int fd);
+int		handle_format(const char *format, va_list args, int fd);
+int		print_format(const char *ptr, va_list args, int fd);
+int		handle_char(va_list args, int fd);
+int		handle_string(va_list args, int fd);
+int		handle_pointer(va_list args, int fd);
+int		handle_int(va_list args, int fd);
+int		handle_uint(va_list args, int fd);
+int		handle_hex(va_list args, int fd, int uppercase);
+int		handle_percent(int fd);
 int		get_int_length(int n);
 int		get_uint_length(unsigned int n);
 int		get_hex_length(unsigned long n);

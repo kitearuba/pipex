@@ -30,13 +30,13 @@ int	open_files(char **argv, t_pipex *pipex)
 	if (pipex->file1 < 0)
 	{
 		free_resources_on_error(pipex, "Error: Unable to open input file");
-		return (1);
+		exit (1);
 	}
 	pipex->file2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipex->file2 < 0)
 	{
 		free_resources_on_error(pipex, "Error: Unable to open output file");
-		return (1);
+		exit (1);
 	}
 	return (0);
 }

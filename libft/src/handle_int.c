@@ -12,11 +12,11 @@
 
 #include "../include/libft.h"
 
-int	handle_int(va_list args)
+int	handle_int(va_list args, int fd)
 {
 	int	num;
 
 	num = va_arg(args, int);
-	ft_putnbr_fd(num, FT_STDOUT);
+	ft_putnbr_fd(num, fd);
 	return (get_int_length(num));
 }

@@ -12,11 +12,11 @@
 
 #include "../include/libft.h"
 
-int	handle_hex(va_list args, int uppercase)
+int	handle_hex(va_list args, int fd, int uppercase)
 {
 	unsigned int	num;
 
 	num = va_arg(args, unsigned int);
-	ft_puthex(num, uppercase);
+	ft_puthex(num, uppercase, fd);
 	return (get_hex_length(num));
 }

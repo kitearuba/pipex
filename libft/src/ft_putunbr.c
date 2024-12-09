@@ -12,9 +12,9 @@
 
 #include "../include/libft.h"
 
-void	ft_putunbr(unsigned int n)
+void	ft_putunbr(unsigned int n, int fd)
 {
 	if (n > 9)
-		ft_putunbr(n / 10);
-	ft_putchar_fd((n % 10) + '0', FT_STDOUT);
+		ft_putunbr(n / 10, fd);
+	ft_putchar_fd((n % 10) + '0', fd);
 }

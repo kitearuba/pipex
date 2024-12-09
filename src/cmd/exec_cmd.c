@@ -31,31 +31,31 @@
  * - Cleans up resources and exits with appropriate codes on failure.
  */
 
+
 int	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 {
-	char	*cmd_path;
+    char	*cmd_path;
 
-	cmd_path = get_cmd_path(cmd[0]);
-	if (!cmd_path)
-	{
-		close(pipex->pipefd[0]);
-		close(pipex->pipefd[1]);
-		free_2d_array(cmd);
-		exit(127);
-	}
-	if (dup2(input_fd, STDIN_FILENO) < 0)
-	{
-		close(input_fd);
-		cleanup_and_handle(cmd_path, cmd, "Error redirecting input", pipex);
-	}
-	if (dup2(output_fd, STDOUT_FILENO) < 0)
-	{
-		close(output_fd);
-		cleanup_and_handle(cmd_path, cmd, "Error redirecting output", pipex);
-	}
-	close(pipex->pipefd[0]);
-	close(pipex->pipefd[1]);
-	execve(cmd_path, cmd, pipex->envp);
-	cleanup_and_handle(cmd_path, cmd, "Error executing command", NULL);
-	exit(1);
+    cmd_path = get_cmd_path(cmd[0]);
+    if (!cmd_path)
+    {
+        ft_printf_fd(STDERR_FILENO, "pipex: %s: command not found\n", cmd[0]);
+        close(pipex->pipefd[1]); // Explicitly close pipefd[1]
+        free_2d_array(cmd);
+        exit(127);
+    }
+    if (dup2(input_fd, STDIN_FILENO) < 0)
+    {
+        close(input_fd); // Explicitly close input_fd
+        cleanup_and_handle(cmd_path, cmd, "Error redirecting input", pipex);
+    }
+    if (dup2(output_fd, STDOUT_FILENO) < 0)
+    {
+        close(output_fd); // Explicitly close output_fd
+        cleanup_and_handle(cmd_path, cmd, "Error redirecting output", pipex);
+    }
+    close(pipex->pipefd[1]); // Close pipefd[1] after redirection
+    execve(cmd_path, cmd, pipex->envp);
+    cleanup_and_handle(cmd_path, cmd, "Error executing command", NULL);
+    exit(1);
 }

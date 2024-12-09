@@ -12,8 +12,8 @@
 
 #include "../include/libft.h"
 
-int	handle_char(va_list args)
+int	handle_char(va_list args, int fd)
 {
-	ft_putchar_fd(va_arg(args, int), FT_STDOUT);
+	ft_putchar_fd(va_arg(args, int), fd);
 	return (1);
 }
