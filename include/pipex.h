@@ -3,9 +3,9 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: christian <christian@student.42.fr>        +#+  +:+       +#+        */
+/*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 10:00:00 by christian         #+#    #+#             */
+/*   Created: 2024/10/14 10:00:00 by chrrodri          #+#    #+#             */
 /*   Updated: 2024/11/21 21:22:55 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -13,25 +13,55 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
+/* ************************************************************************** */
+/*                               Dependencies                                 */
+/* ************************************************************************** */
+
 # include <unistd.h>     /* For pipe(), fork(), dup2(), execve() */
 # include <fcntl.h>      /* For open(), O_RDONLY, O_WRONLY */
 # include <stdlib.h>     /* For malloc(), free(), exit() */
 # include <stdio.h>      /* For perror() */
-# include <sys/wait.h>   /* For waitpid() */
+//# include <sys/wait.h>   /* For waitpid() */
 # include <errno.h>      /* To access errno */
 # include <string.h>     /* For strerror() */
-# include "../libft/include/libft.h"
+# include "../libft/include/libft.h" /* Custom libft library */
 
-/* Struct Definition */
+/* ************************************************************************** */
+/*                               Macros                                       */
+/* ************************************************************************** */
+
+/**
+ * PIPEX_PATH_MAX: Maximum length for a command path.
+ * Set to 4096, which aligns with common system limits for path lengths.
+ */
+# define PIPEX_PATH_MAX 4096
+
+/* ************************************************************************** */
+/*                               Structures                                   */
+/* ************************************************************************** */
+
+/**
+ * struct s_pipex - Holds resources for the pipex program.
+ * @file1: File descriptor for the input file.
+ * @file2: File descriptor for the output file.
+ * @pipefd: Array holding the read and write ends of the pipe.
+ * @cmd1: Parsed arguments for the first command.
+ * @cmd2: Parsed arguments for the second command.
+ * @envp: Environment variables passed to the program.
+ */
 typedef struct s_pipex
 {
-	int		file1;
-	int		file2;
-	int		pipefd[2];
-	char	**cmd1;
-	char	**cmd2;
-	char	**envp;
+	int		file1;          /* Input file descriptor */
+	int		file2;          /* Output file descriptor */
+	int		pipefd[2];      /* Pipe file descriptors */
+	char	**cmd1;         /* Arguments for the first command */
+	char	**cmd2;         /* Arguments for the second command */
+	char	**envp;         /* Environment variables */
 }	t_pipex;
+
+/* ************************************************************************** */
+/*                          Function Prototypes                               */
+/* ************************************************************************** */
 
 /* Utility Functions */
 void	free_2d_array(char **array);
@@ -59,4 +89,4 @@ int		exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd);
 /* Process Handling */
 int		handle_fork(t_pipex *pipex, char **cmd, int index);
 
-#endif // PIPEX_H
+#endif /* PIPEX_H */

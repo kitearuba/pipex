@@ -12,6 +12,19 @@
 
 #include "../../include/pipex.h"
 
+/**
+ * Retrieves directories from the PATH environment variable.
+ * @cmd_path: Pointer to a buffer where the command path will be stored.
+ *
+ * Description:
+ * - Fetches the PATH environment variable using getenv.
+ * - Allocates memory for the command path buffer.
+ * - Splits the PATH into an array of directories using ft_split.
+ *
+ * Returns:
+ * - A pointer to a NULL-terminated array of directory strings.
+ * - Exits with an error message if memory allocation or splitting fails.
+ */
 char	**get_path_dirs(char **cmd_path)
 {
 	char	*path;
