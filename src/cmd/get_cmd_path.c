@@ -12,12 +12,20 @@
 
 #include "../../include/pipex.h"
 
+/**
+ * Constructs a command path by combining a directory and a command.
+ * @dir: Directory path.
+ * @cmd: Command name.
+ *
+ * Returns:
+ * - A newly allocated string containing the full path, or NULL on failure.
+ */
 static char	*construct_cmd_path(char *dir, char *cmd)
 {
 	char	*cmd_path;
 	size_t	len;
 
-	len = ft_strlen(dir) + ft_strlen(cmd) + 2;
+	len = ft_strlen(dir) + ft_strlen(cmd) + 2; // +2 for '/' and '\0'
 	cmd_path = malloc(len);
 	if (cmd_path)
 	{
@@ -28,6 +36,15 @@ static char	*construct_cmd_path(char *dir, char *cmd)
 	return (cmd_path);
 }
 
+/**
+ * Searches for the executable command in directories.
+ * @dirs: Array of directories in the $PATH environment variable.
+ * @cmd: Command name.
+ * @cmd_path: Pointer to command path to free if necessary.
+ *
+ * Returns:
+ * - A newly allocated string containing the command's full path, or NULL if not found.
+ */
 static char	*try_path(char **dirs, char *cmd, char **cmd_path)
 {
 	char	*candidate;
@@ -49,8 +66,19 @@ static char	*try_path(char **dirs, char *cmd, char **cmd_path)
 	return (NULL);
 }
 
+/**
+ * Resolves the full path of a command.
+ * @cmd: Command name or relative/absolute path.
+ *
+ * Returns:
+ * - A newly allocated string containing the command's full path, or NULL if not found.
+ */
 char	*get_cmd_path(char *cmd)
 {
+	char	*cmd_path;
+	char	**dirs;
+	char	*result;
+
 	// Handle absolute paths and paths starting with "./"
 	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
 	{
@@ -59,10 +87,7 @@ char	*get_cmd_path(char *cmd)
 		ft_printf_fd(STDERR_FILENO, "pipex: %s: %s\n", cmd, strerror(errno));
 		return (NULL);
 	}
-	char	*cmd_path;
-	char	**dirs;
-	char	*result;
-
+	// Search command in $PATH
 	dirs = get_path_dirs(&cmd_path);
 	if (!dirs)
 		return (NULL);
