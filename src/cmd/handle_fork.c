@@ -13,8 +13,7 @@
 #include "../../include/pipex.h"
 
 /**
- * handle_fork - Manages the creation of child processes for command execution.
- *
+ * Manages the creation of child processes for command execution.
  * @pipex: Pointer to the main pipex structure.
  * @cmd: Command to execute (parsed as arguments).
  * @index: Indicates whether the function handles cmd1 (1) or cmd2 (2).
@@ -27,10 +26,6 @@
  *   file2.
  * - Calls exec_cmd to execute the given command in the child process.
  * - Handles errors such as failed forks or redirection issues.
- *
- * Returns:
- * - 0 on success.
- * - Non-zero if an error occurs during forking or redirection.
  */
 int	handle_fork(t_pipex *pipex, char **cmd, int index)
 {

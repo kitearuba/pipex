@@ -30,8 +30,6 @@
  * - Does not return on success; the process is replaced by execve.
  * - Cleans up resources and exits with appropriate codes on failure.
  */
-
-
 int	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 {
     char	*cmd_path;
@@ -39,7 +37,6 @@ int	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
     cmd_path = get_cmd_path(cmd[0]);
     if (!cmd_path)
     {
-        ft_printf_fd(STDERR_FILENO, "pipex: %s: command not found\n", cmd[0]);
         close(pipex->pipefd[1]); // Explicitly close pipefd[1]
         free_2d_array(cmd);
         exit(127);

@@ -21,10 +21,16 @@ int	init_pipex(t_pipex *pipex, char **argv, char **envp)
 	pipex->envp = envp;
 	pipex->cmd1 = ft_split(argv[2], ' ');
 	pipex->cmd2 = ft_split(argv[3], ' ');
-	if (!pipex->cmd1 || !pipex->cmd2)
+	if (!pipex->cmd1)
 	{
 		free_pipex(pipex);
-		fatal_error("Error parsing command arguments", NULL, 0);
+		fatal_error("Error parsing cmd1", argv[2], 0);
+		return (1);
+	}
+	if (!pipex->cmd2)
+	{
+		free_pipex(pipex);
+		fatal_error("Error parsing cmd2", argv[3], 0);
 		return (1);
 	}
 	return (0);

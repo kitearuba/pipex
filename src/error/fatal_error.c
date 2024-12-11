@@ -33,6 +33,6 @@ void	fatal_error(const char *msg, const char *detail, int use_errno)
 		ft_printf_fd(STDERR_FILENO, " '%s'", detail);
 	if (use_errno)
 		ft_printf_fd(STDERR_FILENO, ": %s", strerror(errno));
-	ft_printf_fd(STDERR_FILENO, "\n");
+	//ft_printf_fd(STDERR_FILENO, "\n");
 	exit (1);
 }
