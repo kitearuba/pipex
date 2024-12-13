@@ -20,8 +20,8 @@
 # include <unistd.h>     /* For pipe(), fork(), dup2(), execve() */
 # include <fcntl.h>      /* For open(), O_RDONLY, O_WRONLY */
 # include <stdlib.h>     /* For malloc(), free(), exit() */
-# include <stdio.h>      /* For perror() */
-//# include <sys/wait.h>   /* For waitpid() */
+//# include <stdio.h>      /* For perror() */
+# include <sys/wait.h>   /* For waitpid() */
 # include <errno.h>      /* To access errno */
 # include <string.h>     /* For strerror() */
 # include "../libft/include/libft.h" /* Custom libft library */

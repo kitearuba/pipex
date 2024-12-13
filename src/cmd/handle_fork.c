@@ -50,5 +50,5 @@ int	handle_fork(t_pipex *pipex, char **cmd, int index)
 			exec_cmd(pipex, STDIN_FILENO, pipex->file2, cmd);
 		}
 	}
-	return (0);
+	return (pid);
 }
