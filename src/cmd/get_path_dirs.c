@@ -33,7 +33,7 @@ char	**get_path_dirs(char **cmd_path)
 	path = getenv("PATH");
 	if (!path)
 		fatal_error("PATH not found in environment", NULL, 0);
-	*cmd_path = malloc(PIPEX_PATH_MAX);
+	*cmd_path = malloc(4096);
 	if (!*cmd_path)
 		fatal_error("Memory allocation failed for command path", NULL, 1);
 	dirs = ft_split(path, ':');

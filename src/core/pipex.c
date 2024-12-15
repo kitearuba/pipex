@@ -49,12 +49,7 @@ static int	initialize_pipex(t_pipex *pipex, char **argv, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
-	pid_t	pid1;
-	pid_t	pid2;
-	int		status;
 
-	pid1 = -1;
-	pid2 = -1;
 	if (argc != 5)
 	{
 		ft_printf_fd(STDERR_FILENO, "pipex: usage: ./pipex file1 cmd1 cmd2 file2\n");
@@ -62,28 +57,17 @@ int	main(int argc, char **argv, char **envp)
 	}
 	if (initialize_pipex(&pipex, argv, envp))
 		return (1);
-	pid1 = handle_fork(&pipex, pipex.cmd1, 1);
-	if (pid1 < 0)
+	if (handle_fork(&pipex, pipex.cmd1, 1)
+		|| handle_fork(&pipex, pipex.cmd2, 2))
 	{
+		ft_printf_fd(STDERR_FILENO, "pipex: error: failed to execute commands\n");
 		free_pipex(&pipex);
 		return (1);
 	}
-	pid2 = handle_fork(&pipex, pipex.cmd2, 2);
-	if (pid2 < 0) {
-		free_pipex(&pipex);
-		return (1);
-	}
-	// Close pipe in parent process
-	close(pipex.pipefd[0]);
-	close(pipex.pipefd[1]);
-	// Wait for both processes and exit with cmd2's status
-	waitpid(pid1, NULL, 0); // Wait for cmd1
-	waitpid(pid2, &status, 0); // Wait for cmd2 and get its status
 	free_pipex(&pipex);
-	if (WIFEXITED(status)) // Extract exit code if cmd2 exited normally
-		return (WEXITSTATUS(status));
-	return (1); // Default error code if cmd2 didn't exit normally
+	return (0);
 }
+
 
 /**
 * Main function of the Pipex program.
