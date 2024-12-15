@@ -21,6 +21,7 @@ echo -e "${MAGENTA}"
 echo "╔═══════════════════════════════════════════════════════════════════════╗"
 echo "║                                                                       ║"
 
+# "CHRRODRI" in one line, centered, and in one color (cyan)
 echo -e "${CYAN}"  # Cyan for the entire text
 cat << "EOF"
       ██████  ██   ██ ██████  ██████   ██████   ██████   ██████  ██
@@ -43,32 +44,6 @@ divider() {
     echo -e "${YELLOW}-------------------------------------------------------------${NC}"
 }
 
-#!/bin/bash
-
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-MAGENTA='\033[1;35m'
-CYAN='\033[0;36m'
-NC='\033[0m' # No Color
-
-# Variables for tracking test results
-total_tests=0
-passed_tests=0
-failed_tests=0
-valgrind_total_tests=0
-valgrind_passed_tests=0
-valgrind_failed_tests=0
-
-# Header
-echo -e "${CYAN}Welcome to the Pipex Tester Script!${NC}"
-echo "This script tests your Pipex program with various scenarios."
-
-# Section divider function for tests
-divider() {
-    echo -e "${YELLOW}-------------------------------------------------------------${NC}"
-}
 
 # Function to execute a test case and compare output
 run_test() {
@@ -117,7 +92,7 @@ expected_fail_test() {
     divider
 }
 
-# Separate function for Test 5 to handle invalid command case as in the original logic
+# Dedicated function for Test 5
 test_invalid_command() {
     ((total_tests++))
     local test_name="Test 5: invalid command and wc"
@@ -147,15 +122,6 @@ run_valgrind_test() {
     echo -e "${MAGENTA}Running Valgrind Test: ${test_name}${NC}"
     echo -e "${CYAN}Description: ${description}${NC}"
     echo -e "${YELLOW}Command: ${valgrind_cmd}${NC}"
-	
-	# Capture Valgrind output
-    local valgrind_output
-    valgrind_output=$(eval "${valgrind_cmd}" 2>&1)
-
-    # Print Valgrind output for debugging
-    echo "${valgrind_output}"
-
-    # Check for memory leaks
     if eval "${valgrind_cmd}" 2>&1 | grep -q "ERROR SUMMARY: 0 errors"; then
         echo -e "${GREEN}${test_name} passed (no memory leaks).${NC}"
         ((valgrind_passed_tests++))
@@ -170,9 +136,9 @@ run_valgrind_test() {
 echo "hello world" > input.txt
 echo "hello      world    pipex" > input6.txt
 echo "singleword" > input8.txt
-touch empty.txt  # Create empty.txt for empty file test
-touch restricted.txt  # For permission tests
-chmod 000 restricted.txt  # Set permissions to trigger failure cases
+touch empty.txt
+touch restricted.txt
+chmod 000 restricted.txt
 
 # Test cases
 run_test "Test 1: Basic command with cat and wc -l" \
@@ -197,7 +163,6 @@ expected_fail_test "Test 4: Non-existent input file" \
     "This test checks if Pipex fails gracefully when the input file does not exist." \
     './pipex nonexistent.txt "cat" "wc" output4.txt'
 
-# Use original logic for Test 5
 test_invalid_command
 
 run_test "Test 6: Multiple spaces in input" \
@@ -218,11 +183,11 @@ run_test "Test 8: Single word in input file" \
 
 # Valgrind Tests
 run_valgrind_test "Valgrind Test 1: Basic cat and wc -l" \
-    "This test checks for memory leaks when running a basic pipeline with 'cat' and 'wc -l'." \
+    "Checks for memory leaks when running a basic pipeline with 'cat' and 'wc -l'." \
     'valgrind --leak-check=full ./pipex input.txt "cat" "wc -l" output_valgrind1.txt'
 
 run_valgrind_test "Valgrind Test 2: Non-existent input file" \
-    "This test checks for memory leaks when the input file does not exist." \
+    "Checks for memory leaks when the input file does not exist." \
     'valgrind --leak-check=full ./pipex nonexistent.txt "cat" "wc -l" output_valgrind2.txt'
 
 run_valgrind_test "Valgrind Test 3: Invalid command" \
@@ -233,10 +198,9 @@ run_valgrind_test "Valgrind Test 4: Empty input file" \
     "Checks for memory leaks when the input file is empty." \
     'valgrind --leak-check=full ./pipex empty.txt "cat" "wc -c" output_valgrind4.txt'
 
-
 divider
 
-# Summary of results
+# Summary
 echo -e "${CYAN}===================="
 echo -e "  TEST RESULTS"
 echo -e "====================${NC}"
@@ -244,7 +208,6 @@ echo -e "${GREEN}Passed tests: ${passed_tests}/${total_tests}${NC}"
 echo -e "${RED}Failed tests: ${failed_tests}/${total_tests}${NC}"
 echo -e "${CYAN}====================${NC}"
 
-# Summary of Valgrind results
 echo -e "${CYAN}===================="
 echo -e " VALGRIND RESULTS"
 echo -e "====================${NC}"

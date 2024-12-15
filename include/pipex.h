@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:00:00 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/11/21 21:22:55 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/15 19:30:47 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@
  */
 typedef struct s_pipex
 {
-	int		file1;          /* Input file descriptor */
-	int		file2;          /* Output file descriptor */
-	int		pipefd[2];      /* Pipe file descriptors */
-	char	**cmd1;         /* Arguments for the first command */
-	char	**cmd2;         /* Arguments for the second command */
-	char	**envp;         /* Environment variables */
+	int		file1;		/* Input file descriptor */
+	int		file2;		/* Output file descriptor */
+	int		pipefd[2];	/* Pipe file descriptors */
+	char	**cmd1;		/* Arguments for the first command */
+	char	**cmd2;		/* Arguments for the second command */
+	char	**envp;		/* Environment variables */
 }	t_pipex;
 
 /* ************************************************************************** */
