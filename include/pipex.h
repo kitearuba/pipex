@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:00:00 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/12/15 19:30:47 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:38:15 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <fcntl.h>      /* For open(), O_RDONLY, O_WRONLY */
 # include <stdlib.h>     /* For malloc(), free(), exit() */
 # include <stdio.h>      /* For perror() */
-//# include <sys/wait.h>   /* For waitpid() */
+# include <sys/wait.h>   /* For waitpid() */
 # include <errno.h>      /* To access errno */
 # include <string.h>     /* For strerror() */
 # include "../libft/include/libft.h" /* Custom libft library */

@@ -15,7 +15,7 @@ NAME = pipex
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Wextra -Werror
 
 # Directories
 SRC_DIR := src

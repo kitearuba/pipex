@@ -41,7 +41,7 @@ int	handle_fork(t_pipex *pipex, char **cmd, int index)
 			close(pipex->pipefd[0]);
 			exec_cmd(pipex, pipex->file1, pipex->pipefd[1], cmd);
 		}
-		if (index == 2)
+		else if (index == 2)
 		{
 			close(pipex->pipefd[1]);
 			if (dup2(pipex->pipefd[0], STDIN_FILENO) < 0)
@@ -50,5 +50,5 @@ int	handle_fork(t_pipex *pipex, char **cmd, int index)
 			exec_cmd(pipex, STDIN_FILENO, pipex->file2, cmd);
 		}
 	}
-	return (0);
+	return (pid);
 }
