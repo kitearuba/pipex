@@ -6,48 +6,63 @@
 #    By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 21:23:07 by chrrodri          #+#    #+#              #
-#    Updated: 2024/11/21 21:23:16 by chrrodri         ###   ########.fr        #
+#    Updated: 2024/12/19 21:23:16 by chrrodri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Project name
-NAME = pipex
-NAME_BONUS = pipex_bonus
+# **************************************************************************** #
+#                              Project Information                             #
+# **************************************************************************** #
 
-# Compiler and flags
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+NAME            = pipex
 
-# Directories
-SRC_DIR := src
-BONUS_SRC_DIR := src
-LIBFT_DIR := libft
-INC_DIR := include
+# **************************************************************************** #
+#                            Compiler and Flags                                #
+# **************************************************************************** #
 
-# Paths and Dependencies
-MAKEFILE = Makefile
-HEADER = $(INC_DIR)/pipex.h
-LIBFT_A = $(LIBFT_DIR)/libft.a
-LIBFT_H = $(LIBFT_DIR)/$(INC_DIR)/libft.h
-LIBFT_MAKEFILE = $(LIBFT_DIR)/Makefile
-DEPS := $(HEADER) $(MAKEFILE)
+CC              = gcc
+CFLAGS          = -Wall -Wextra -Werror
 
-# Mandatory and Bonus Sources
+# **************************************************************************** #
+#                              Directories                                     #
+# **************************************************************************** #
+
+SRC_DIR         = src
+LIBFT_DIR       = libft
+INC_DIR         = include
+
+# **************************************************************************** #
+#                      File Paths and Dependencies                             #
+# **************************************************************************** #
+
+MAKEFILE        = Makefile
+HEADER          = $(INC_DIR)/pipex.h
+LIBFT_A         = $(LIBFT_DIR)/libft.a
+LIBFT_H         = $(LIBFT_DIR)/$(INC_DIR)/libft.h
+LIBFT_MAKEFILE  = $(LIBFT_DIR)/Makefile
+DEPS            = $(HEADER) $(MAKEFILE)
+
+# **************************************************************************** #
+#                             Source Files                                     #
+# **************************************************************************** #
+
 SRC_MAND   := $(SRC_DIR)/core/pipex.c
-SRC_BONUS  := $(BONUS_SRC_DIR)/core/pipex_bonus.c
 
-# Common Files (shared between mandatory and bonus)
-SRC_COMMON :=	$(SRC_DIR)/error/error_handle.c $(SRC_DIR)/error/fatal_error.c \
-       			$(SRC_DIR)/error/free_on_error.c \
-       			$(SRC_DIR)/file/open_files.c $(SRC_DIR)/file/create_pipe.c \
-       			$(SRC_DIR)/cmd/get_cmd_path.c $(SRC_DIR)/cmd/get_path_dirs.c \
-       			$(SRC_DIR)/cmd/exec_cmd.c $(SRC_DIR)/cmd/handle_fork.c \
-       			$(SRC_DIR)/utils/free_2d_array.c $(SRC_DIR)/utils/free_pipex.c \
-       			$(SRC_DIR)/utils/init_pipex.c $(SRC_DIR)/utils/cleanup_and_handle.c
+SRC_COMMON      := $(SRC_DIR)/error/error_handle.c \
+                  $(SRC_DIR)/error/fatal_error.c \
+                  $(SRC_DIR)/error/free_on_error.c \
+                  $(SRC_DIR)/file/open_files.c \
+                  $(SRC_DIR)/file/create_pipe.c \
+                  $(SRC_DIR)/cmd/get_cmd_path.c \
+                  $(SRC_DIR)/cmd/get_path_dirs.c \
+                  $(SRC_DIR)/cmd/exec_cmd.c \
+                  $(SRC_DIR)/cmd/handle_fork.c \
+                  $(SRC_DIR)/utils/free_2d_array.c \
+                  $(SRC_DIR)/utils/free_pipex.c \
+                  $(SRC_DIR)/utils/init_pipex.c \
+                  $(SRC_DIR)/utils/cleanup_and_handle.c
 
-# Object Files
-OBJ_MAND   := $(SRC_MAND:.c=.o) $(SRC_COMMON:.c=.o)
-OBJ_BONUS  := $(SRC_BONUS:.c=.o) $(SRC_COMMON:.c=.o)
+OBJ_MAND        = $(SRC_MAND:.c=.o) $(SRC_COMMON:.c=.o)
 
 LIBFT_SRC := $(LIBFT_DIR)/$(SRC_DIR)/ft_isalpha.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isdigit.c \
              $(LIBFT_DIR)/$(SRC_DIR)/ft_isalnum.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isascii.c \
@@ -79,7 +94,11 @@ LIBFT_SRC := $(LIBFT_DIR)/$(SRC_DIR)/ft_isalpha.c $(LIBFT_DIR)/$(SRC_DIR)/ft_isd
              $(LIBFT_DIR)/$(SRC_DIR)/utils.c $(LIBFT_DIR)/$(SRC_DIR)/get_next_line.c \
              $(LIBFT_DIR)/$(SRC_DIR)/get_next_line_bonus.c $(LIBFT_DIR)/$(SRC_DIR)/ft_strappend.c
 
-LIBFT_OBJ := $(LIBFT_SRC:.c=.o)
+LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
+
+# **************************************************************************** #
+#                              Targets                                         #
+# **************************************************************************** #
 
 # All rule: Compile everything
 all: $(NAME)
@@ -88,37 +107,30 @@ all: $(NAME)
 $(NAME): $(OBJ_MAND) $(LIBFT_A)
 	$(CC) $(CFLAGS) $(OBJ_MAND) $(LIBFT_A) -I$(INC_DIR) -o $(NAME)
 
-# Rule to rebuild libft.a if libft.h or any libft source files change
+# Rule to rebuild libft.a
 $(LIBFT_A): $(LIBFT_MAKEFILE) $(LIBFT_SRC) $(LIBFT_H)
 	$(MAKE) -C $(LIBFT_DIR)
 
 # Pattern rule for compiling object files from source files
-$(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_COMMON)/%.c $(DEPS)
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(DEPS)
 	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-# Build the bonus executable
-bonus: $(NAME_BONUS)
-
-# Bonus Rule
-$(NAME_BONUS): $(OBJ_BONUS) $(LIBFT_A)
-	$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBFT_A) -I$(INC_DIR) -o $(NAME_BONUS)
-
-# Pattern rule for compiling bonus object files from source files
-$(BONUS_SRC_DIR)/%.o: $(SRC_BONUS)/%.c $(SRC_COMMON)/%.c $(DEPS)
-	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
-
-# Clean object files (including bonus objects)
+# Clean object files
 clean:
-	rm -f $(OBJ_MAND) $(OBJ_BONUS)
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	rm -f $(OBJ_MAND)
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 # Full clean including libft.a and pipex executable
 fclean: clean
-	rm -f $(NAME) $(NAME_BONUS)
+	rm -f $(NAME)
 	rm -f $(LIBFT_A)
 
 # Rebuild everything
 re: fclean all
+
+# **************************************************************************** #
+#                             Special Rules                                    #
+# **************************************************************************** #
 
 # Phony targets
 .PHONY: all clean fclean re bonus
