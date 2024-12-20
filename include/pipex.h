@@ -57,6 +57,9 @@ typedef struct s_pipex
 	char	**cmd1;
 	char	**cmd2;
 	char	**envp;
+	pid_t	pid1;
+	pid_t	pid2;
+	int		status2;
 }	t_pipex;
 
 /* ************************************************************************** */
@@ -70,7 +73,7 @@ void	free_resources_on_error(t_pipex *pipex, const char *error_message);
 void	fatal_error(const char *msg, const char *detail, int use_errno);
 
 /* Initialization and Cleanup */
-int		init_pipex(t_pipex *pipex, char **argv, char **envp);
+void	init_pipex(t_pipex *pipex, char **argv, char **envp);
 int		cleanup_and_handle(char *cmd_path, char **cmd, char *error_msg,
 			t_pipex *pipex);
 

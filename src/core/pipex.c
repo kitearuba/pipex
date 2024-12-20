@@ -11,14 +11,29 @@
 /* ************************************************************************** */
 
 #include "../../include/pipex.h"
+
+static void	validate_args(int argc)
+{
+	if (argc != 5)
+	{
+		ft_printf_fd(STDERR_FILENO,
+		"pipex: usage: ./pipex infile cmd1 cmd2 outfile\n");
+		exit (1);
+	}
+	if (!getenv("PATH")) {
+		ft_printf_fd(STDERR_FILENO,
+		"pipex: Error: PATH not found in environment variables\n");
+		exit (1);
+	}
+}
+
 /**
  * Initialize the pipex structure and perform required setup.
  * Handles all errors internally and exits the program if an error occurs.
  */
 static void	initialize_pipex(t_pipex *pipex, char **argv, char **envp)
 {
-	if (init_pipex(pipex, argv, envp))
-		free_resources_on_error(pipex, "failed to initialize pipex");
+	init_pipex(pipex, argv, envp);
 	if (open_files(argv, pipex))
 		free_resources_on_error(pipex, "failed to open files");
 	if (create_pipe(pipex->pipefd))
@@ -37,27 +52,17 @@ static void	wait_for_processes(pid_t pid1, pid_t pid2, int *status2)
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
-	pid_t	pid1;
-	pid_t	pid2;
-	int		status2;
 
-	pid1 = -1;
-	pid2 = -1;
-	status2 = 0;
-	if (argc != 5)
-	{
-		ft_printf_fd(STDERR_FILENO,
-		"pipex: usage: ./pipex infile cmd1 cmd2 outfile\n");
-		return (1);
-	}
+	pipex.status2 = 0;
+	validate_args(argc);
 	initialize_pipex(&pipex, argv, envp);
-	pid1 = handle_fork(&pipex, pipex.cmd1, 1);
-	pid2 = handle_fork(&pipex, pipex.cmd2, 2);
+	pipex.pid1 = handle_fork(&pipex, pipex.cmd1, 1);
+	pipex.pid2 = handle_fork(&pipex, pipex.cmd2, 2);
 	close(pipex.pipefd[0]);
 	close(pipex.pipefd[1]);
-	wait_for_processes(pid1, pid2, &status2);
+	wait_for_processes(pipex.pid1, pipex.pid2, &pipex.status2);
 	free_pipex(&pipex);
-	if (WIFEXITED(status2))
-		return (WEXITSTATUS(status2));
+	if (WIFEXITED(pipex.status2))
+		return (WEXITSTATUS(pipex.status2));
 	return (1);
 }
