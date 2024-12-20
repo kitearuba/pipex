@@ -39,7 +39,7 @@ MAKEFILE        = Makefile
 HEADER          = $(INC_DIR)/pipex.h
 LIBFT_A         = $(LIBFT_DIR)/libft.a
 LIBFT_H         = $(LIBFT_DIR)/$(INC_DIR)/libft.h
-LIBFT_MAKEFILE  = $(LIBFT_DIR)/Makefile
+LIBFT_MAKEFILE  = $(LIBFT_DIR)/$(MAKEFILE)
 DEPS            = $(HEADER) $(MAKEFILE)
 
 # **************************************************************************** #

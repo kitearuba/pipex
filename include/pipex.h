@@ -51,12 +51,12 @@
  */
 typedef struct s_pipex
 {
-	int		file1;		/* Input file descriptor */
-	int		file2;		/* Output file descriptor */
-	int		pipefd[2];	/* Pipe file descriptors */
-	char	**cmd1;		/* Arguments for the first command */
-	char	**cmd2;		/* Arguments for the second command */
-	char	**envp;		/* Environment variables */
+	int		infile;
+	int		outfile;
+	int		pipefd[2];
+	char	**cmd1;
+	char	**cmd2;
+	char	**envp;
 }	t_pipex;
 
 /* ************************************************************************** */
@@ -75,7 +75,7 @@ int		cleanup_and_handle(char *cmd_path, char **cmd, char *error_msg,
 			t_pipex *pipex);
 
 /* Error Handling */
-int		error_handle(char *str, int *pipefd);
+void	error_handle(char *str, int *pipefd);
 
 /* File Handling */
 int		open_files(char **argv, t_pipex *pipex);

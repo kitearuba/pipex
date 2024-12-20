@@ -21,9 +21,8 @@
  * Description:
  * - Closes both ends of the pipe (if valid) to free resources.
  * - Delegates error reporting and program termination to `fatal_error`.
- * - Returns 1 for consistency, though the program exits in `fatal_error`.
  */
-int	error_handle(char *str, int *pipefd)
+void	error_handle(char *str, int *pipefd)
 {
 	if (pipefd)
 	{
@@ -31,5 +30,4 @@ int	error_handle(char *str, int *pipefd)
 		close(pipefd[1]);
 	}
 	fatal_error(str, NULL, 1);
-	return (1);
 }

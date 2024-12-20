@@ -14,10 +14,10 @@
 
 void	free_resources_on_error(t_pipex *pipex, const char *error_message)
 {
-	if (pipex->file1 >= 0)
-		close(pipex->file1);
-	if (pipex->file2 >= 0)
-		close(pipex->file2);
+	if (pipex->infile >= 0)
+		close(pipex->infile);
+	if (pipex->outfile >= 0)
+		close(pipex->outfile);
 	if (pipex->cmd1)
 	{
 		free_2d_array(pipex->cmd1);

@@ -11,27 +11,18 @@
 /* ************************************************************************** */
 
 #include "../../include/pipex.h"
-
-static int	handle_errors(const char *msg, t_pipex *pipex)
-{
-	ft_printf_fd(STDERR_FILENO, "pipex:error:%s/n", msg);
-	free_pipex(pipex);
-	return (1);
-}
-
 /**
  * Initialize the pipex structure and perform required setup.
- * Returns 0 on success or 1 on error, with appropriate error messages.
+ * Handles all errors internally and exits the program if an error occurs.
  */
-static int	initialize_pipex(t_pipex *pipex, char **argv, char **envp)
+static void	initialize_pipex(t_pipex *pipex, char **argv, char **envp)
 {
 	if (init_pipex(pipex, argv, envp))
-		return (handle_errors("failed to initialize pipex", pipex));
+		free_resources_on_error(pipex, "failed to initialize pipex");
 	if (open_files(argv, pipex))
-		return (handle_errors("failed to open files", pipex));
+		free_resources_on_error(pipex, "failed to open files");
 	if (create_pipe(pipex->pipefd))
-		return (handle_errors("failed to create pipe", pipex));
-	return (0);
+		free_resources_on_error(pipex, "failed to create pipe");
 }
 
 static void	wait_for_processes(pid_t pid1, pid_t pid2, int *status2)
@@ -56,11 +47,10 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 5)
 	{
 		ft_printf_fd(STDERR_FILENO,
-			"pipex: usage: ./pipex file1 cmd1 cmd2 file2\n");
+		"pipex: usage: ./pipex infile cmd1 cmd2 outfile\n");
 		return (1);
 	}
-	if (initialize_pipex(&pipex, argv, envp))
-		return (1);
+	initialize_pipex(&pipex, argv, envp);
 	pid1 = handle_fork(&pipex, pipex.cmd1, 1);
 	pid2 = handle_fork(&pipex, pipex.cmd2, 2);
 	close(pipex.pipefd[0]);

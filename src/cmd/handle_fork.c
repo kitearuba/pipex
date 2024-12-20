@@ -33,13 +33,13 @@ int	handle_fork(t_pipex *pipex, char **cmd, int index)
 
 	pid = fork();
 	if (pid < 0)
-		return (error_handle("Error forking", pipex->pipefd));
+		error_handle("Error forking", pipex->pipefd);
 	if (pid == 0)
 	{
 		if (index == 1)
 		{
 			close(pipex->pipefd[0]);
-			exec_cmd(pipex, pipex->file1, pipex->pipefd[1], cmd);
+			exec_cmd(pipex, pipex->infile, pipex->pipefd[1], cmd);
 		}
 		else if (index == 2)
 		{
@@ -47,7 +47,7 @@ int	handle_fork(t_pipex *pipex, char **cmd, int index)
 			if (dup2(pipex->pipefd[0], STDIN_FILENO) < 0)
 				fatal_error("Error redirecting pipe to stdin", NULL, 1);
 			close(pipex->pipefd[0]);
-			exec_cmd(pipex, STDIN_FILENO, pipex->file2, cmd);
+			exec_cmd(pipex, STDIN_FILENO, pipex->outfile, cmd);
 		}
 	}
 	return (pid);
