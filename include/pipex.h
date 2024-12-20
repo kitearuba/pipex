@@ -81,8 +81,8 @@ int		cleanup_and_handle(char *cmd_path, char **cmd, char *error_msg,
 void	error_handle(char *str, int *pipefd);
 
 /* File Handling */
-int		open_files(char **argv, t_pipex *pipex);
-int		create_pipe(int *pipefd);
+void	open_files(char **argv, t_pipex *pipex);
+void	create_pipe(int *pipefd, t_pipex *pipex);
 
 /* Command Handling */
 char	*get_cmd_path(char *cmd);

@@ -12,9 +12,8 @@
 
 #include "../../include/pipex.h"
 
-int	create_pipe(int *pipefd)
+void	create_pipe(int *pipefd, t_pipex *pipex)
 {
 	if (pipe(pipefd) == -1)
-		error_handle("Error creating pipe", pipefd);
-	return (0);
+		free_resources_on_error(pipex, "Error creating pipe");
 }

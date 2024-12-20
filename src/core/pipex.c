@@ -27,19 +27,6 @@ static void	validate_args(int argc)
 	}
 }
 
-/**
- * Initialize the pipex structure and perform required setup.
- * Handles all errors internally and exits the program if an error occurs.
- */
-static void	initialize_pipex(t_pipex *pipex, char **argv, char **envp)
-{
-	init_pipex(pipex, argv, envp);
-	if (open_files(argv, pipex))
-		free_resources_on_error(pipex, "failed to open files");
-	if (create_pipe(pipex->pipefd))
-		free_resources_on_error(pipex, "failed to create pipe");
-}
-
 static void	wait_for_processes(pid_t pid1, pid_t pid2, int *status2)
 {
 	int	status1;
@@ -55,7 +42,9 @@ int	main(int argc, char **argv, char **envp)
 
 	pipex.status2 = 0;
 	validate_args(argc);
-	initialize_pipex(&pipex, argv, envp);
+	init_pipex(&pipex, argv, envp);
+	open_files(argv, &pipex);
+	create_pipe(pipex.pipefd, &pipex);
 	pipex.pid1 = handle_fork(&pipex, pipex.cmd1, 1);
 	pipex.pid2 = handle_fork(&pipex, pipex.cmd2, 2);
 	close(pipex.pipefd[0]);

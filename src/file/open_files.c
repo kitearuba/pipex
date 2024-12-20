@@ -21,7 +21,7 @@
  * otherscan read (4 = 100).Without the leading 0, the number would be treated 
  * as decimal, leading to incorrect interpretation.
 */
-int	open_files(char **argv, t_pipex *pipex)
+void	open_files(char **argv, t_pipex *pipex)
 {
 	pipex->infile = -1;
 	pipex->outfile = -1;
@@ -31,5 +31,4 @@ int	open_files(char **argv, t_pipex *pipex)
 	pipex->outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipex->outfile < 0)
 		free_resources_on_error(pipex, "Error: Unable to open output file");
-	return (0);
 }
