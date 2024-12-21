@@ -48,18 +48,15 @@ DEPS            = $(HEADER) $(MAKEFILE)
 
 SRC_MAND   := $(SRC_DIR)/core/pipex.c
 
-SRC_COMMON      := $(SRC_DIR)/error/fatal_error.c \
-                  $(SRC_DIR)/error/free_on_error.c \
+SRC_COMMON      := $(SRC_DIR)/error/free_on_error.c \
                   $(SRC_DIR)/file/open_files.c \
                   $(SRC_DIR)/file/create_pipe.c \
                   $(SRC_DIR)/cmd/get_cmd_path.c \
-                  $(SRC_DIR)/cmd/get_path_dirs.c \
                   $(SRC_DIR)/cmd/exec_cmd.c \
                   $(SRC_DIR)/cmd/handle_fork.c \
                   $(SRC_DIR)/utils/free_2d_array.c \
                   $(SRC_DIR)/utils/free_pipex.c \
                   $(SRC_DIR)/utils/init_pipex.c \
-                  $(SRC_DIR)/utils/cleanup_and_handle.c
 
 OBJ_MAND        = $(SRC_MAND:.c=.o) $(SRC_COMMON:.c=.o)
 

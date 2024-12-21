@@ -69,22 +69,18 @@ typedef struct s_pipex
 /* Utility Functions */
 void	free_2d_array(char **array);
 void	free_pipex(t_pipex *pipex);
-void	free_resources_on_error(t_pipex *pipex, const char *error_message, int exit_code);
-void	fatal_error(const char *msg, const char *detail, int use_errno);
-
 /* Initialization*/
 void	init_pipex(t_pipex *pipex, char **argv, char **envp);
 
 /* Error Handling */
-
+void	free_resources_on_error(t_pipex *pipex, const char *error_message, int exit_code);
 
 /* File Handling */
 void	open_files(char **argv, t_pipex *pipex);
 void	create_pipe(int *pipefd, t_pipex *pipex);
 
 /* Command Handling */
-char	*get_cmd_path(char *cmd);
-char	**get_path_dirs(char **cmd_path);
+char	*get_cmd_path(t_pipex *pipex, char *cmd);
 void	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd);
 
 /* Process Handling */

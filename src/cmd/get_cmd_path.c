@@ -12,6 +12,20 @@
 
 #include "../../include/pipex.h"
 
+static char	**get_path_dirs(t_pipex *pipex)
+{
+	char	*path;
+	char	**dirs;
+
+	path = getenv("PATH");
+	if (!path)
+		free_resources_on_error(pipex, "PATH environment variable not found", 1);
+	dirs = ft_split(path, ':');
+	if (!dirs)
+		free_resources_on_error(pipex, "Failed to split PATH into directories", 1);
+	return (dirs);
+}
+
 /**
  * Constructs a command path by combining a directory and a command.
  * @dir: Directory path.
@@ -40,7 +54,7 @@ static char	*construct_cmd_path(char *dir, char *cmd)
  * @cmd_path: Pointer to command path to free if necessary.
  * Returns: Newly allocated string with the cmd's full path, if not found NULL.
  */
-static char	*try_path(char **dirs, char *cmd, char **cmd_path)
+static char	*search_in_path(t_pipex *pipex, char **dirs, char *cmd)
 {
 	char	*candidate;
 	int		i;
@@ -51,13 +65,14 @@ static char	*try_path(char **dirs, char *cmd, char **cmd_path)
 		candidate = construct_cmd_path(dirs[i], cmd);
 		if (candidate && access(candidate, X_OK) == 0)
 		{
-			free(*cmd_path);
 			free_2d_array(dirs);
 			return (candidate);
 		}
 		free(candidate);
 		i++;
 	}
+	free_2d_array(dirs);
+	free_resources_on_error(pipex, "Command not found", 127);
 	return (NULL);
 }
 
@@ -66,28 +81,16 @@ static char	*try_path(char **dirs, char *cmd, char **cmd_path)
  * @cmd: Command name or relative/absolute path.
  * Returns: Newly allocated string with the cmd's full path, NULL if not found.
  */
-char	*get_cmd_path(char *cmd)
+char	*get_cmd_path(t_pipex *pipex, char *cmd)
 {
-	char	*cmd_path;
 	char	**dirs;
-	char	*result;
 
 	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
 	{
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
-		ft_printf_fd(STDERR_FILENO, "pipex: %s: %s\n", cmd, strerror(errno));
-		return (NULL);
+		free_resources_on_error(pipex, "Command not executable", 127);
 	}
-	dirs = get_path_dirs(&cmd_path);
-	if (!dirs)
-		return (NULL);
-	result = try_path(dirs, cmd, &cmd_path);
-	if (!result)
-	{
-		free(cmd_path);
-		free_2d_array(dirs);
-		ft_printf_fd(STDERR_FILENO, "pipex: %s: command not found\n", cmd);
-	}
-	return (result);
+	dirs = get_path_dirs(pipex);
+	return (search_in_path(pipex, dirs, cmd));
 }

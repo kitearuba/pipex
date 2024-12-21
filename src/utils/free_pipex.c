@@ -15,13 +15,7 @@
 void	free_pipex(t_pipex *pipex)
 {
 	if (pipex->cmd1)
-	{
 		free_2d_array(pipex->cmd1);
-		pipex->cmd1 = NULL;
-	}
 	if (pipex->cmd2)
-	{
 		free_2d_array(pipex->cmd2);
-		pipex->cmd2 = NULL;
-	}
 }

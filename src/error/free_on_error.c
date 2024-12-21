@@ -15,15 +15,9 @@
 void	free_resources_on_error(t_pipex *pipex, const char *error_message, int exit_code)
 {
 	if (pipex->cmd1)
-	{
 		free_2d_array(pipex->cmd1);
-		pipex->cmd1 = NULL;
-	}
 	if (pipex->cmd2)
-	{
 		free_2d_array(pipex->cmd2);
-		pipex->cmd2 = NULL;
-	}
 	if (pipex->infile >= 0)
 		close(pipex->infile);
 	if (pipex->outfile >= 0)
