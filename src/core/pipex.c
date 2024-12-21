@@ -40,6 +40,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
+	pipex.infile = -1;
+	pipex.outfile = -1;
+	pipex.pipefd[0] = -1;
+	pipex.pipefd[1] = -1;
 	pipex.status2 = 0;
 	validate_args(argc);
 	init_pipex(&pipex, argv, envp);
