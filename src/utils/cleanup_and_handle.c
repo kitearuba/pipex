@@ -20,7 +20,7 @@ int	cleanup_and_handle(char *cmd_path, char **cmd, char *error_msg, \
 	if (cmd)
 		free_2d_array(cmd);
 	if (pipex)
-		error_handle(error_msg, pipex->pipefd);
+		free_resources_on_error(pipex, error_msg, 1);
 	else
 		fatal_error(error_msg, NULL, 1);
 	return (1);

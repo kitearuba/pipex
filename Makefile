@@ -48,8 +48,7 @@ DEPS            = $(HEADER) $(MAKEFILE)
 
 SRC_MAND   := $(SRC_DIR)/core/pipex.c
 
-SRC_COMMON      := $(SRC_DIR)/error/error_handle.c \
-                  $(SRC_DIR)/error/fatal_error.c \
+SRC_COMMON      := $(SRC_DIR)/error/fatal_error.c \
                   $(SRC_DIR)/error/free_on_error.c \
                   $(SRC_DIR)/file/open_files.c \
                   $(SRC_DIR)/file/create_pipe.c \

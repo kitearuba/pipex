@@ -21,8 +21,8 @@ void	init_pipex(t_pipex *pipex, char **argv, char **envp)
 	pipex->envp = envp;
 	pipex->cmd1 = ft_split(argv[2], ' ');
 	if (!pipex->cmd1)
-		free_resources_on_error(pipex, "Error parsing cmd1");
+		free_resources_on_error(pipex, "Error parsing cmd1", 1);
 	pipex->cmd2 = ft_split(argv[3], ' ');
 	if (!pipex->cmd2)
-		free_resources_on_error(pipex, "Error parsing cmd2");
+		free_resources_on_error(pipex, "Error parsing cmd2", 1);
 }

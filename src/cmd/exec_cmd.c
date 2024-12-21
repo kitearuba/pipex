@@ -27,25 +27,19 @@
  * - Does not return on success; the process is replaced by execve.
  * - Cleans up resources and exits with appropriate codes on failure.
  */
-int	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
+void	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 {
 	char	*cmd_path;
 
 	cmd_path = get_cmd_path(cmd[0]);
 	if (!cmd_path)
-	{
-		close(pipex->pipefd[1]);
-		free_resources_on_error(pipex, "Invalid command");
-		exit(127);
-	}
+		free_resources_on_error(pipex, "Invalid command", 127);
 	if (dup2(input_fd, STDIN_FILENO) < 0 || dup2(output_fd, STDOUT_FILENO) < 0)
-		cleanup_and_handle(cmd_path, cmd,
-			"Error redirecting input/output", pipex);
+		free_resources_on_error(pipex, "Error redirecting input/output", 1);
 	close(pipex->pipefd[1]);
 	execve(cmd_path, cmd, pipex->envp);
-	cleanup_and_handle(cmd_path, cmd, "Error executing command", NULL);
 	if (errno == EACCES)
-		exit(126);
+		free_resources_on_error(pipex, "Error executing command", 126);
 	else
-		exit(127);
+		free_resources_on_error(pipex, "Error executing command", 127);
 }

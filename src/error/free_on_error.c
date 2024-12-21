@@ -12,7 +12,7 @@
 
 #include "../../include/pipex.h"
 
-void	free_resources_on_error(t_pipex *pipex, const char *error_message)
+void	free_resources_on_error(t_pipex *pipex, const char *error_message, int exit_code)
 {
 	if (pipex->cmd1)
 	{
@@ -32,5 +32,11 @@ void	free_resources_on_error(t_pipex *pipex, const char *error_message)
 		close(pipex->pipefd[0]);
 	if (pipex->pipefd[1] >= 0) // Close write end of pipe if open
 		close(pipex->pipefd[1]);
-	fatal_error(error_message, NULL, 1);
+	/* Error message printing */
+	if (error_message && *error_message)
+		ft_printf_fd(STDERR_FILENO,"pipex: %s", error_message);
+	if (errno)
+		ft_printf_fd(STDERR_FILENO,": %s", strerror(errno));
+	ft_printf_fd(STDERR_FILENO, "\n");
+	exit(exit_code);
 }

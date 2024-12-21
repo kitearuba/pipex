@@ -15,5 +15,5 @@
 void	create_pipe(int *pipefd, t_pipex *pipex)
 {
 	if (pipe(pipefd) == -1)
-		free_resources_on_error(pipex, "Error creating pipe");
+		free_resources_on_error(pipex, "Error creating pipe", 1);
 }
