@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:04:28 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/12/16 14:46:07 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:24:29 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ static char	**get_path_dirs(t_pipex *pipex)
 
 	path = getenv("PATH");
 	if (!path)
-		free_resources_on_error(pipex, "PATH environment variable not found", 1);
+		free_resources_on_error(pipex,
+			"PATH environment variable not found", 1);
 	dirs = ft_split(path, ':');
 	if (!dirs)
-		free_resources_on_error(pipex, "Failed to split PATH into directories", 1);
+		free_resources_on_error(pipex,
+			"Failed to split PATH into directories", 1);
 	return (dirs);
 }
 

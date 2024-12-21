@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:18:38 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/12/16 16:39:09 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:27:14 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ static void	validate_args(int argc)
 	if (argc != 5)
 	{
 		ft_printf_fd(STDERR_FILENO,
-		"pipex: usage: ./pipex infile cmd1 cmd2 outfile\n");
+			"pipex: usage: ./pipex infile cmd1 cmd2 outfile\n");
 		exit (1);
 	}
-	if (!getenv("PATH")) {
+	if (!getenv("PATH"))
+	{
 		ft_printf_fd(STDERR_FILENO,
-		"pipex: Error: PATH not found in environment variables\n");
+			"pipex: Error: PATH not found in environment variables\n");
 		exit (1);
 	}
 }
@@ -74,26 +75,20 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	/* Initialize pipex structure */
 	pipex.infile = -1;
 	pipex.outfile = -1;
 	pipex.pipefd[0] = -1;
 	pipex.pipefd[1] = -1;
 	pipex.status2 = 0;
-	/* Validate arguments and environment */
 	validate_args(argc);
-	/* Initialize, open files, and create pipe */
 	init_pipex(&pipex, argv, envp);
 	open_files(argv, &pipex);
 	create_pipe(pipex.pipefd, &pipex);
-	/* Handle command execution */
 	pipex.pid1 = handle_fork(&pipex, pipex.cmd1, 1);
 	pipex.pid2 = handle_fork(&pipex, pipex.cmd2, 2);
-	/* Close pipe ends and wait for processes */
 	close(pipex.pipefd[0]);
 	close(pipex.pipefd[1]);
 	wait_for_processes(pipex.pid1, pipex.pid2, &pipex.status2);
-	/* Clean up and exit */
 	free_pipex(&pipex);
 	if (WIFEXITED(pipex.status2))
 		return (WEXITSTATUS(pipex.status2));

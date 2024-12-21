@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:00:00 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/12/16 16:38:15 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:26:45 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	free_pipex(t_pipex *pipex);
 void	init_pipex(t_pipex *pipex, char **argv, char **envp);
 
 /* Error Handling */
-void	free_resources_on_error(t_pipex *pipex, const char *error_message, int exit_code);
+void	free_resources_on_error(t_pipex *pipex, const char *error_message,
+			int exit_code);
 
 /* File Handling */
 void	open_files(char **argv, t_pipex *pipex);
