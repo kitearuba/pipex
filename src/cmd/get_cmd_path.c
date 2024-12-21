@@ -12,6 +12,17 @@
 
 #include "../../include/pipex.h"
 
+/* ************************************************************************** */
+/*                         Path Resolution Helpers                            */
+/* ************************************************************************** */
+
+/**
+ * get_path_dirs - Splits the PATH environment variable into directories.
+ * @pipex: Pointer to the pipex structure for error handling.
+ * Returns:
+ * - Array of directory strings if successful.
+ * - Exits with an error message if the PATH is not found or split fails.
+ */
 static char	**get_path_dirs(t_pipex *pipex)
 {
 	char	*path;
@@ -27,10 +38,12 @@ static char	**get_path_dirs(t_pipex *pipex)
 }
 
 /**
- * Constructs a command path by combining a directory and a command.
+ * construct_cmd_path - Combines a directory and command into a full path.
  * @dir: Directory path.
- * @cmd: Command name. 
- * Returns: Newly allocated string with the full path, or NULL on failure.
+ * @cmd: Command name.
+ * Returns:
+ * - Newly allocated string with the full path.
+ * - NULL if memory allocation fails.
  */
 static char	*construct_cmd_path(char *dir, char *cmd)
 {
@@ -48,11 +61,13 @@ static char	*construct_cmd_path(char *dir, char *cmd)
 }
 
 /**
- * Searches for the executable command in directories.
- * @dirs: Array of directories in the $PATH environment variable.
+ * search_in_path - Searches for an executable command in PATH directories.
+ * @pipex: Pointer to the pipex structure for error handling.
+ * @dirs: Array of directories in the PATH.
  * @cmd: Command name.
- * @cmd_path: Pointer to command path to free if necessary.
- * Returns: Newly allocated string with the cmd's full path, if not found NULL.
+ * Returns:
+ * - Full path of the executable command.
+ * - Exits with an error message if the command is not found.
  */
 static char	*search_in_path(t_pipex *pipex, char **dirs, char *cmd)
 {
@@ -76,10 +91,17 @@ static char	*search_in_path(t_pipex *pipex, char **dirs, char *cmd)
 	return (NULL);
 }
 
+/* ************************************************************************** */
+/*                          Main Path Resolution                              */
+/* ************************************************************************** */
+
 /**
- * Resolves the full path of a command.
+ * get_cmd_path - Resolves the full path of a command.
+ * @pipex: Pointer to the pipex structure for error handling.
  * @cmd: Command name or relative/absolute path.
- * Returns: Newly allocated string with the cmd's full path, NULL if not found.
+ * Returns:
+ * - Full path of the command if executable.
+ * - Exits with an error if the command is not found or not executable.
  */
 char	*get_cmd_path(t_pipex *pipex, char *cmd)
 {

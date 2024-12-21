@@ -12,15 +12,19 @@
 
 #include "../../include/pipex.h"
 
+/* ************************************************************************** */
+/*                              File Handling                                 */
+/* ************************************************************************** */
+
 /**
- * open_files - Opens input and output files for the pipex program.
- * Handles errors and stores file descriptors in the t_pipex structure.
- * NOTE:
- * In C, a leading 0 indicates an octal (base 8) number, where each digit ranges 
- * from 0 to 7. 0644 means:owner can read/write (6 = 110 in binary), group and 
- * otherscan read (4 = 100).Without the leading 0, the number would be treated 
- * as decimal, leading to incorrect interpretation.
-*/
+ * open_files - Opens the input and output files for the pipex program.
+ * @argv: Argument vector containing input/output file paths.
+ * @pipex: Pointer to the pipex structure to store file descriptors.
+ * Description:
+ * - Opens the input file (read-only).
+ * - Creates/truncates the output file with appropriate permissions.
+ * - Exits with error if any file operation fails.
+ */
 void	open_files(char **argv, t_pipex *pipex)
 {
 	pipex->infile = -1;

@@ -12,8 +12,12 @@
 
 #include "../../include/pipex.h"
 
+/* ************************************************************************** */
+/*                         Command Execution Function                         */
+/* ************************************************************************** */
+
 /**
- * Executes a given command with redirected input/output.
+ * exec_cmd - Executes a given command with redirected input/output.
  * @pipex: Pointer to the main pipex structure.
  * @input_fd: File descriptor for the command's input.
  * @output_fd: File descriptor for the command's output.
@@ -22,10 +26,7 @@
  * - Resolves the command's absolute path using get_cmd_path.
  * - Redirects input/output using dup2.
  * - Executes the command using execve.
- * - Handles errors such as invalid commands or failed redirection.
- * Returns:
- * - Does not return on success; the process is replaced by execve.
- * - Cleans up resources and exits with appropriate codes on failure.
+ * - Exits with appropriate error codes on failure.
  */
 void	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 {

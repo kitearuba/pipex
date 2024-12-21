@@ -12,6 +12,17 @@
 
 #include "../../include/pipex.h"
 
+/* ************************************************************************** */
+/*                          2D Array Memory Cleanup                          */
+/* ************************************************************************** */
+
+/**
+ * free_2d_array - Frees a dynamically allocated 2D array.
+ * @arr: Pointer to the 2D array to free.
+ * Description:
+ * - Iterates through the array, freeing each individual element.
+ * - Frees the array itself and sets its pointer to NULL.
+ */
 void	free_2d_array(char **arr)
 {
 	int	i;

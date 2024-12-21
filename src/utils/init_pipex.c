@@ -12,9 +12,19 @@
 
 #include "../../include/pipex.h"
 
+/* ************************************************************************** */
+/*                           Initialization Function                          */
+/* ************************************************************************** */
+
 /**
- * Initializes the pipex structure with environment variables and commands.
- * Parses command-line arguments into executable commands and handles errors.
+ * init_pipex - Initializes the pipex structure.
+ * @pipex: Pointer to the pipex structure to initialize.
+ * @argv: Argument vector containing input/output files and commands.
+ * @envp: Environment variables passed to the program.
+ * Description:
+ * - Sets up the environment variables.
+ * - Parses command-line arguments into commands with their arguments.
+ * - Exits on failure if parsing fails for any command.
  */
 void	init_pipex(t_pipex *pipex, char **argv, char **envp)
 {

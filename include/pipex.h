@@ -20,7 +20,7 @@
 # include <unistd.h>     /* For pipe(), fork(), dup2(), execve() */
 # include <fcntl.h>      /* For open(), O_RDONLY, O_WRONLY */
 # include <stdlib.h>     /* For malloc(), free(), exit() */
-# include <stdio.h>      /* For perror() */
+//# include <stdio.h>      /* For perror() */
 # include <sys/wait.h>   /* For waitpid() */
 # include <errno.h>      /* To access errno */
 # include <string.h>     /* For strerror() */
@@ -42,12 +42,15 @@
 
 /**
  * struct s_pipex - Holds resources for the pipex program.
- * @file1: File descriptor for the input file.
- * @file2: File descriptor for the output file.
- * @pipefd: Array holding the read and write ends of the pipe.
- * @cmd1: Parsed arguments for the first command.
- * @cmd2: Parsed arguments for the second command.
+ * @infile: Input file descriptor.
+ * @outfile: Output file descriptor.
+ * @pipefd: Array for pipe's read and write ends.
+ * @cmd1: Arguments for the first command.
+ * @cmd2: Arguments for the second command.
  * @envp: Environment variables passed to the program.
+ * @pid1: Process ID of the first child.
+ * @pid2: Process ID of the second child.
+ * @status2: Status of the second process.
  */
 typedef struct s_pipex
 {

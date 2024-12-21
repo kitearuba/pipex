@@ -12,6 +12,20 @@
 
 #include "../../include/pipex.h"
 
+/* ************************************************************************** */
+/*                          Error Handling & Cleanup                          */
+/* ************************************************************************** */
+
+/**
+ * free_resources_on_error - Cleans up resources and exits on error.
+ * @pipex: Pointer to the pipex structure for resource tracking.
+ * @error_message: Message to display for the error.
+ * @exit_code: Exit code for the program.
+ * Description:
+ * - Frees allocated memory (e.g., command arrays).
+ * - Closes open file descriptors (infile, outfile, pipe ends).
+ * - Prints the error message and exits with the specified code.
+ */
 void	free_resources_on_error(t_pipex *pipex, const char *error_message, int exit_code)
 {
 	if (pipex->cmd1)
