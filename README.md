@@ -1,12 +1,10 @@
 ---
 
-# 🛠️ **Pipex - Pipe Redirection in C** 🛠️
+# 🛠️ **Pipex - Unix Pipe Handling in C** 🛠️
 
 ![Pipex](https://img.shields.io/badge/Pipex-Project-blue?style=flat-square) ![C Programming](https://img.shields.io/badge/Language-C-green?style=flat-square) ![Makefile](https://img.shields.io/badge/Build-Makefile-yellow?style=flat-square) ![42 Network](https://img.shields.io/badge/42Network-Pipex-lightblue?style=flat-square)
 
-Welcome to **Pipex**, a project that focuses on handling pipes and executing commands in a **Unix** environment using **C programming**. This project is part of the **42 Network** curriculum and provides a deeper understanding of process creation, pipe redirection, and command execution.
-
-This version includes the **enhanced Libft** with `ft_printf` and `get_next_line`, giving you access to a robust set of utilities while managing standard and custom I/O operations.
+Welcome to **Pipex**, a foundational project in the **42 School** curriculum designed to deepen understanding of **Unix** pipe mechanics, process creation, and inter-process communication through the use of **C programming**. This implementation adheres strictly to the **42 Norm** and project specifications, featuring modular code, centralized error handling, and a clean structure to ensure maintainability.
 
 ---
 
@@ -14,11 +12,11 @@ This version includes the **enhanced Libft** with `ft_printf` and `get_next_line
 
 1. [Introduction](#introduction)
 2. [Project Structure](#project-structure)
-3. [Changes in This Version](#changes-in-this-version)
+3. [Key Features](#key-features)
 4. [Technologies Used](#technologies-used)
 5. [Installation](#installation)
 6. [Usage](#usage)
-7. [Pipex Functionality](#pipex-functionality)
+7. [Error Handling and Exit Codes](#error-handling-and-exit-codes)
 8. [Contributing](#contributing)
 9. [Acknowledgements](#acknowledgements)
 10. [Author](#author)
@@ -27,13 +25,19 @@ This version includes the **enhanced Libft** with `ft_printf` and `get_next_line
 
 ## 📖 **Introduction**
 
-**Pipex** is a project designed to implement a basic program capable of emulating the behavior of Unix shell pipes (`|`). The project handles file input/output redirection while piping the output of one command to the input of another, much like:
+**Pipex** emulates Unix shell behavior for piping commands, allowing you to execute:
 
 ```bash
-< file1 cmd1 | cmd2 > file2
+< infile cmd1 | cmd2 > outfile
 ```
 
-With **Pipex**, you will gain a solid understanding of how to create and manage processes, handle pipe communication between commands, and manage file descriptors in **C**.
+The program demonstrates:
+- **Process management** using `fork`.
+- **Pipe redirection** with `dup2`.
+- **File I/O operations** with `open`, `close`, and system calls.
+- Handling complex edge cases (e.g., missing files, invalid commands).
+
+This project lays a strong foundation for more advanced projects like **Minishell** and **Philosophers**.
 
 ---
 
@@ -42,116 +46,124 @@ With **Pipex**, you will gain a solid understanding of how to create and manage 
 ```bash
 .
 ├── include/           # Header files
-│   └── pipex.h        # Header file for pipex project
-├── libft/             # Enhanced Libft with ft_printf and get_next_line
+│   └── pipex.h        # Centralized function declarations and macros
+├── libft/             # Enhanced Libft with additional utilities
 │   ├── include/       # Header files for libft
 │   └── src/           # Source files for libft
-├── src/               # Source files implementing the main functionality
-│   ├── cmd/           # Functions related to command handling
-│   ├── core/          # Core program logic (e.g., pipex.c)
-│   ├── error/         # Error-handling functions
-│   ├── file/          # Functions for file and pipe management
-│   └── utils/         # Utility functions for memory and resource management
-├── Makefile           # Makefile to compile the project
-└── README.md          # This README file
+├── src/               # Pipex implementation files
+│   ├── cmd/           # Command execution logic
+│   ├── core/          # Core application logic
+│   ├── error/         # Centralized error handling
+│   ├── file/          # File and pipe management
+│   └── utils/         # Utility functions for memory/resource cleanup
+├── Makefile           # Automates compilation
+└── README.md          # Documentation (this file)
 ```
 
 ---
 
-## 🔄 **Changes in This Version**
+## 🔑 **Key Features**
 
-### **Modular Structure**
-- The project has been reorganized to separate concerns and improve maintainability.
-- Functions are grouped by their responsibilities:
-  - **cmd/**: Command-related operations (e.g., `get_cmd_path`, `handle_fork`).
-  - **core/**: Main program logic (`pipex.c`).
-  - **error/**: Error-handling functions (`fatal_error`, `free_on_error`).
-  - **file/**: File and pipe management (`open_files`, `create_pipe`).
-  - **utils/**: Utility functions (`free_2d_array`, `cleanup_and_handle`).
+### **Modular Codebase**
+- Functions grouped by responsibilities for better organization and reusability:
+  - **cmd/**: Command path resolution and execution (`exec_cmd`, `get_cmd_path`).
+  - **core/**: Application entry point (`pipex.c`).
+  - **error/**: Unified error handling (`free_resources_on_error`).
+  - **file/**: File and pipe operations (`open_files`, `create_pipe`).
+  - **utils/**: Resource cleanup utilities (`free_2d_array`, `free_pipex`).
 
-### **Why This Structure?**
-- Encourages modularity, making the codebase easier to navigate and extend.
-- Simplifies debugging and testing by isolating functionality into smaller files.
-- Prepares the project for potential extensions (e.g., **Minishell**).
+### **Centralized Error Handling**
+- Errors are processed through a single entry point, ensuring proper cleanup and detailed error messages. Exit codes conform to Unix standards:
+  - `127`: Command not found.
+  - `126`: Permission denied.
+  - `1`: Generic error.
+
+### **Comprehensive Comments**
+- Documentation for each function following 42 Norm, making the project beginner-friendly and easy to extend.
 
 ---
 
 ## 🛠️ **Technologies Used**
 
-- **C Language**: Core language for the pipex implementation and libft integration.
-- **Makefile**: Automates the build process for both **pipex** and **libft**.
-- **GCC Compiler**: Used to compile the source files and create executables.
+- **C Programming**: Core implementation.
+- **Libft Library**: Extended functionality with `ft_printf` and utilities.
+- **Makefile**: For efficient compilation.
+- **GCC Compiler**: Compilation with strict warnings and memory debugging enabled.
 
 ---
 
 ## 🚀 **Installation**
 
-To install and compile the **pipex** project, follow these steps:
+### **Step 1: Clone the Repository**
+```bash
+git clone https://github.com/kitearuba/pipex.git
+```
 
-1. **Clone the Repository**:
-   ```bash
-   git clone git@github.com:kitearuba/pipex.git
-   ```
+### **Step 2: Navigate to the Project Directory**
+```bash
+cd pipex
+```
 
-2. **Navigate to the Project Directory**:
-   ```bash
-   cd pipex
-   ```
-
-3. **Compile the Project**:
-   Use the `make` command to compile the project and generate the executable:
-   ```bash
-   make
-   ```
-
-This will compile both the **pipex** and **libft** parts of the project, resulting in an executable for **pipex**.
+### **Step 3: Compile the Project**
+Run:
+```bash
+make
+```
 
 ---
 
 ## 💡 **Usage**
 
-Once compiled, you can use **pipex** to mimic pipe redirections between commands.
-
-### **Basic Example**:
-To execute the equivalent of:
+### **Basic Example**
+To emulate:
 ```bash
-< file1 cmd1 | cmd2 > file2
+< infile cmd1 | cmd2 > outfile
 ```
 
-You would run:
+Run:
 ```bash
-./pipex file1 "cmd1" "cmd2" file2
+./pipex infile "cmd1" "cmd2" outfile
 ```
 
 ---
 
-## 🔨 **Pipex Functionality**
+## 🛑 **Error Handling and Exit Codes**
 
-### 🔄 **Pipex Workflow**
+### **Exit Codes**
+- `127`: Command not found or invalid path.
+- `126`: Permission denied for the command.
+- `1`: Other errors (e.g., failed file open).
 
-**Pipex** reads from an input file, executes the first command (`cmd1`), pipes its output as the input to the second command (`cmd2`), and finally writes the output of `cmd2` to an output file.
+### **Examples**
+1. **Missing Input File**:
+   ```bash
+   ./pipex nonexistent.txt "ls" "wc" output.txt
+   ```
+   Output:
+   ```bash
+   pipex: Unable to open input file: No such file or directory
+   ```
 
-### 🛑 **Error Handling**
-
-The program includes comprehensive error handling for scenarios such as:
-- **Invalid file paths**.
-- **Command not found**.
-- **Insufficient permissions**.
-- **Pipe creation failures**.
-
-All errors are reported through a centralized `fatal_error` function for consistency.
+2. **Invalid Command**:
+   ```bash
+   ./pipex infile "invalidcmd" "wc" outfile
+   ```
+   Output:
+   ```bash
+   pipex: invalidcmd: command not found
+   ```
 
 ---
 
 ## 🤝 **Contributing**
 
-Contributions are welcome! Feel free to open issues or submit pull requests for bug fixes, improvements, or new features.
+Suggestions and improvements are always welcome! Feel free to fork the repository and submit a pull request.
 
 ---
 
 ## 🙌 **Acknowledgements**
 
-A special thanks to the **42 Network** and the open-source community for their continuous support and for providing the resources to learn and improve.
+Special thanks to the **42 Network** community for providing a collaborative learning environment and valuable feedback.
 
 ---
 
