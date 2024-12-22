@@ -6,7 +6,7 @@
 #    By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 21:23:07 by chrrodri          #+#    #+#              #
-#    Updated: 2024/12/19 21:23:16 by chrrodri         ###   ########.fr        #
+#    Updated: 2024/12/22 15:55:44 by chrrodri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,12 +51,13 @@ SRC_MAND   := $(SRC_DIR)/core/pipex.c
 SRC_COMMON      := $(SRC_DIR)/error/free_on_error.c \
                   $(SRC_DIR)/file/open_files.c \
                   $(SRC_DIR)/file/create_pipe.c \
+                  $(SRC_DIR)/cmd/get_path.c \
                   $(SRC_DIR)/cmd/get_cmd_path.c \
                   $(SRC_DIR)/cmd/exec_cmd.c \
                   $(SRC_DIR)/cmd/handle_fork.c \
                   $(SRC_DIR)/utils/free_2d_array.c \
                   $(SRC_DIR)/utils/free_pipex.c \
-                  $(SRC_DIR)/utils/init_pipex.c \
+                  $(SRC_DIR)/utils/init_pipex.c
 
 OBJ_MAND        = $(SRC_MAND:.c=.o) $(SRC_COMMON:.c=.o)
 

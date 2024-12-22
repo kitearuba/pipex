@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:18:38 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/12/21 21:27:14 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/22 16:02:58 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * Exits the program if the number of arguments is incorrect or if the PATH
  * environment variable is missing.
  */
-static void	validate_args(int argc)
+static void	validate_args(int argc, char **envp)
 {
 	if (argc != 5)
 	{
@@ -30,7 +30,7 @@ static void	validate_args(int argc)
 			"pipex: usage: ./pipex infile cmd1 cmd2 outfile\n");
 		exit (1);
 	}
-	if (!getenv("PATH"))
+	if (!get_path_from_env(envp))
 	{
 		ft_printf_fd(STDERR_FILENO,
 			"pipex: Error: PATH not found in environment variables\n");
@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 	pipex.pipefd[0] = -1;
 	pipex.pipefd[1] = -1;
 	pipex.status2 = 0;
-	validate_args(argc);
+	validate_args(argc, envp);
 	init_pipex(&pipex, argv, envp);
 	open_files(argv, &pipex);
 	create_pipe(pipex.pipefd, &pipex);

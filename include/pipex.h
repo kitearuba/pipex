@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:00:00 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/12/21 21:26:45 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/22 16:09:05 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	open_files(char **argv, t_pipex *pipex);
 void	create_pipe(int *pipefd, t_pipex *pipex);
 
 /* Command Handling */
-char	*get_cmd_path(t_pipex *pipex, char *cmd);
+char	*get_path_from_env(char **envp);
+char	*get_cmd_path(t_pipex *pipex, char *cmd, char **envp);
 void	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd);
 
 /* Process Handling */

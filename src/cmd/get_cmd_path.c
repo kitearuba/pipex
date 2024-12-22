@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:04:28 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/12/21 21:24:29 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/22 16:08:27 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@
  * - Array of directory strings if successful.
  * - Exits with an error message if the PATH is not found or split fails.
  */
-static char	**get_path_dirs(t_pipex *pipex)
+static char	**get_path_dirs(t_pipex *pipex, char **envp)
 {
 	char	*path;
 	char	**dirs;
 
-	path = getenv("PATH");
+	path = get_path_from_env(envp);
 	if (!path)
 		free_resources_on_error(pipex,
 			"PATH environment variable not found", 1);
@@ -105,7 +105,7 @@ static char	*search_in_path(t_pipex *pipex, char **dirs, char *cmd)
  * - Full path of the command if executable.
  * - Exits with an error if the command is not found or not executable.
  */
-char	*get_cmd_path(t_pipex *pipex, char *cmd)
+char	*get_cmd_path(t_pipex *pipex, char *cmd, char **envp)
 {
 	char	**dirs;
 
@@ -115,6 +115,6 @@ char	*get_cmd_path(t_pipex *pipex, char *cmd)
 			return (ft_strdup(cmd));
 		free_resources_on_error(pipex, "Command not executable", 127);
 	}
-	dirs = get_path_dirs(pipex);
+	dirs = get_path_dirs(pipex, envp);
 	return (search_in_path(pipex, dirs, cmd));
 }

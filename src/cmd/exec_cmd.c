@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:50:31 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/12/16 15:06:58 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/22 16:12:08 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 {
 	char	*cmd_path;
 
-	cmd_path = get_cmd_path(pipex, cmd[0]);
+	cmd_path = get_cmd_path(pipex, cmd[0], pipex->envp);
 	if (!cmd_path)
 		free_resources_on_error(pipex, "Invalid command", 127);
 	if (dup2(input_fd, STDIN_FILENO) < 0 || dup2(output_fd, STDOUT_FILENO) < 0)
