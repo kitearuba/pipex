@@ -32,7 +32,7 @@ void	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd)
 {
 	char	*cmd_path;
 
-	cmd_path = get_cmd_path(pipex, cmd[0], pipex->envp);
+	cmd_path = get_cmd_path(pipex, cmd[0]);
 	if (!cmd_path)
 		free_resources_on_error(pipex, "Invalid command", 127);
 	if (dup2(input_fd, STDIN_FILENO) < 0 || dup2(output_fd, STDOUT_FILENO) < 0)

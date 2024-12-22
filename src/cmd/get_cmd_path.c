@@ -23,12 +23,12 @@
  * - Array of directory strings if successful.
  * - Exits with an error message if the PATH is not found or split fails.
  */
-static char	**get_path_dirs(t_pipex *pipex, char **envp)
+static char	**get_path_dirs(t_pipex *pipex)
 {
 	char	*path;
 	char	**dirs;
 
-	path = get_path_from_env(envp);
+	path = get_path_from_env(pipex->envp);
 	if (!path)
 		free_resources_on_error(pipex,
 			"PATH environment variable not found", 1);
@@ -105,7 +105,7 @@ static char	*search_in_path(t_pipex *pipex, char **dirs, char *cmd)
  * - Full path of the command if executable.
  * - Exits with an error if the command is not found or not executable.
  */
-char	*get_cmd_path(t_pipex *pipex, char *cmd, char **envp)
+char	*get_cmd_path(t_pipex *pipex, char *cmd)
 {
 	char	**dirs;
 
@@ -115,6 +115,6 @@ char	*get_cmd_path(t_pipex *pipex, char *cmd, char **envp)
 			return (ft_strdup(cmd));
 		free_resources_on_error(pipex, "Command not executable", 127);
 	}
-	dirs = get_path_dirs(pipex, envp);
+	dirs = get_path_dirs(pipex);
 	return (search_in_path(pipex, dirs, cmd));
 }

@@ -85,7 +85,7 @@ void	create_pipe(int *pipefd, t_pipex *pipex);
 
 /* Command Handling */
 char	*get_path_from_env(char **envp);
-char	*get_cmd_path(t_pipex *pipex, char *cmd, char **envp);
+char	*get_cmd_path(t_pipex *pipex, char *cmd);
 void	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd);
 
 /* Process Handling */
