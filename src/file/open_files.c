@@ -27,8 +27,6 @@
  */
 void	open_files(char **argv, t_pipex *pipex)
 {
-	pipex->infile = -1;
-	pipex->outfile = -1;
 	pipex->infile = open(argv[1], O_RDONLY);
 	if (pipex->infile < 0)
 		free_resources_on_error(pipex, "Unable to open input file", 1);

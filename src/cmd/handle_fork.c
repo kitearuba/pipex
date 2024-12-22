@@ -31,7 +31,7 @@
  * - The process ID (pid) of the child process on success.
  * - Exits with error if fork or redirection fails.
  */
-int	handle_fork(t_pipex *pipex, char **cmd, int index)
+int	handle_fork(t_pipex *pipex, int index)
 {
 	pid_t	pid;
 
@@ -43,7 +43,7 @@ int	handle_fork(t_pipex *pipex, char **cmd, int index)
 		if (index == 1)
 		{
 			close(pipex->pipefd[0]);
-			exec_cmd(pipex, pipex->infile, pipex->pipefd[1], cmd);
+			exec_cmd(pipex, pipex->infile, pipex->pipefd[1], pipex->cmd1);
 		}
 		else if (index == 2)
 		{
@@ -52,7 +52,7 @@ int	handle_fork(t_pipex *pipex, char **cmd, int index)
 				free_resources_on_error(pipex,
 					"Error redirecting pipe to stdin", 1);
 			close(pipex->pipefd[0]);
-			exec_cmd(pipex, STDIN_FILENO, pipex->outfile, cmd);
+			exec_cmd(pipex, STDIN_FILENO, pipex->outfile, pipex->cmd2);
 		}
 	}
 	return (pid);

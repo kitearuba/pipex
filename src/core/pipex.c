@@ -19,6 +19,7 @@
 /**
  * validate_args - Validates command-line arguments.
  * @argc: Argument count passed to the program.
+ * @envp: Environment variables.
  * Exits the program if the number of arguments is incorrect or if the PATH
  * environment variable is missing.
  */
@@ -39,22 +40,40 @@ static void	validate_args(int argc, char **envp)
 }
 
 /* ************************************************************************** */
-/*                           Process Management                               */
+/*                        Process and Command Execution                       */
 /* ************************************************************************** */
 
 /**
- * wait_for_processes - Waits for child processes to finish.
- * @pid1: Process ID of the first child process.
- * @pid2: Process ID of the second child process.
- * @status2: Pointer to the exit status of the second process.
+ * execute_commands - Executes the given commands.
+ * @pipex: Pointer to the pipex structure.
+ *
+ * Creates two child processes to handle the commands, closes pipe ends, and
+ * waits for the processes to finish.
  */
-static void	wait_for_processes(pid_t pid1, pid_t pid2, int *status2)
+static void	execute_commands(t_pipex *pipex)
 {
-	int	status1;
+	pipex->pid1 =handle_fork(pipex, 1);
+	pipex->pid2 =handle_fork(pipex, 2);
+	close(pipex->pipefd[0]);
+	close(pipex->pipefd[1]);
+	waitpid(pipex->pid1, NULL, 0);
+	waitpid(pipex->pid2, &pipex->status2, 0);
+}
 
-	status1 = 0;
-	waitpid(pid1, &status1, 0);
-	waitpid(pid2, status2, 0);
+/**
+ * initialize_pipex - Initializes resources for the pipex program.
+ * @pipex: Pointer to the pipex structure.
+ * @argv: Argument vector containing filenames and commands.
+ * @envp: Environment variables.
+ *
+ * Handles initialization of resources such as command parsing, file handling,
+ * and pipe creation.
+ */
+static void	initialize_pipex(t_pipex *pipex, char **argv, char **envp)
+{
+	init_pipex(pipex, argv, envp);
+	open_files(argv, pipex);
+	create_pipe(pipex->pipefd, pipex);
 }
 
 /* ************************************************************************** */
@@ -75,20 +94,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	pipex.infile = -1;
-	pipex.outfile = -1;
-	pipex.pipefd[0] = -1;
-	pipex.pipefd[1] = -1;
-	pipex.status2 = 0;
+	ft_memset(&pipex, -1, sizeof(t_pipex));
 	validate_args(argc, envp);
-	init_pipex(&pipex, argv, envp);
-	open_files(argv, &pipex);
-	create_pipe(pipex.pipefd, &pipex);
-	pipex.pid1 = handle_fork(&pipex, pipex.cmd1, 1);
-	pipex.pid2 = handle_fork(&pipex, pipex.cmd2, 2);
-	close(pipex.pipefd[0]);
-	close(pipex.pipefd[1]);
-	wait_for_processes(pipex.pid1, pipex.pid2, &pipex.status2);
+	initialize_pipex(&pipex, argv, envp);
+	execute_commands(&pipex);
 	free_pipex(&pipex);
 	if (WIFEXITED(pipex.status2))
 		return (WEXITSTATUS(pipex.status2));

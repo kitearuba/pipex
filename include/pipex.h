@@ -89,6 +89,6 @@ char	*get_cmd_path(t_pipex *pipex, char *cmd);
 void	exec_cmd(t_pipex *pipex, int input_fd, int output_fd, char **cmd);
 
 /* Process Handling */
-int		handle_fork(t_pipex *pipex, char **cmd, int index);
+int		handle_fork(t_pipex *pipex, int index);
 
 #endif /* PIPEX_H */
