@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:04:28 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/12/22 16:08:27 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/28 22:59:24 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static char	*search_in_path(t_pipex *pipex, char **dirs, char *cmd)
 {
 	char	*candidate;
 	int		i;
+	char	*error_message;
 
 	i = 0;
 	while (dirs[i])
@@ -89,7 +90,12 @@ static char	*search_in_path(t_pipex *pipex, char **dirs, char *cmd)
 		i++;
 	}
 	free_2d_array(dirs);
-	free_resources_on_error(pipex, "Command not found", 127);
+	error_message = ft_strjoin("Command not found: ", cmd);
+	if (!error_message)
+		free_resources_on_error(pipex, "Command not found", 127);
+	ft_printf_fd(STDERR_FILENO, "pipex: %s\n", error_message);
+	free (error_message);
+	free_resources_on_error(pipex, NULL, 127);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:18:38 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/12/22 16:02:58 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:33:22 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static void	validate_args(int argc, char **envp)
  */
 static void	execute_commands(t_pipex *pipex)
 {
-	pipex->pid1 =handle_fork(pipex, 1);
-	pipex->pid2 =handle_fork(pipex, 2);
+	pipex->pid1 = handle_fork(pipex, 1);
+	pipex->pid2 = handle_fork(pipex, 2);
 	close(pipex->pipefd[0]);
 	close(pipex->pipefd[1]);
 	waitpid(pipex->pid1, NULL, 0);

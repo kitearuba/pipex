@@ -6,7 +6,7 @@
 /*   By: chrrodri <chrrodri@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:31:36 by chrrodri          #+#    #+#             */
-/*   Updated: 2024/12/21 21:27:48 by chrrodri         ###   ########.fr       */
+/*   Updated: 2024/12/28 23:00:05 by chrrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 void	free_resources_on_error(t_pipex *pipex, const char *error_message,
 	int exit_code)
 {
+	int	saved_errno;
+
+	saved_errno = errno;
 	if (pipex->cmd1)
 		free_2d_array(pipex->cmd1);
 	if (pipex->cmd2)
@@ -42,9 +45,8 @@ void	free_resources_on_error(t_pipex *pipex, const char *error_message,
 	if (pipex->pipefd[1] >= 0)
 		close(pipex->pipefd[1]);
 	if (error_message && *error_message)
-		ft_printf_fd(STDERR_FILENO, "pipex: %s", error_message);
-	if (errno)
-		ft_printf_fd(STDERR_FILENO, ": %s", strerror(errno));
-	ft_printf_fd(STDERR_FILENO, "\n");
+		ft_printf_fd(STDERR_FILENO, "pipex: %s\n", error_message);
+	else if (saved_errno)
+		ft_printf_fd(STDERR_FILENO, "pipex: %s\n", strerror(saved_errno));
 	exit(exit_code);
 }
