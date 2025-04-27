@@ -173,3 +173,7 @@ Special thanks to the **42 Network** community for providing a collaborative lea
   [GitHub Profile](https://github.com/kitearuba)
 
 ---
+
+> Bonus version (`pipex_bonus`) will be added in the future.
+
+---
